@@ -4,7 +4,8 @@ import path from 'path';
 import os from 'os';
 import { URL } from 'url';
 
-import Electron from 'electron';
+import Electron, { Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
+
 import _ from 'lodash';
 
 import mainEvents from '@/main/mainEvents';
@@ -141,11 +142,272 @@ Electron.app.whenReady().then(async() => {
     }
     callback(result);
   });
+  buildApplicationMenu();
+  // dumpApplicationMenu();
   window.openPreferences();
 
   setupKim(k8smanager);
   setupUpdate(cfg);
 });
+
+function dumpAppMenuItems(items: Array<MenuItem>, indent: string): void {
+  for (const item of items) {
+    console.log(`${ indent }QQQ: role: ${ item.role }, type: ${ item.type }, label: ${ item.label }, submenu:`);
+    // console.table(item.submenu?.items);
+    if (item.type === 'submenu') {
+      dumpAppMenuItems(item.submenu?.items ?? [], `${ indent } `);
+    }
+  }
+}
+
+function dumpApplicationMenu(): void {
+  const menu = Menu.getApplicationMenu();
+  const items = menu?.items;
+
+  console.log(`QQQ: menu dump!!! `);
+  if (!items) {
+    console.log('no menu items');
+
+    return;
+  }
+  dumpAppMenuItems(items, '');
+}
+
+function menuItemsFromList(list: Array<string>): Array<Record<string, unknown>> {
+  return list.map(label => label === '--' ? { type: 'separator' } : { role: label });
+}
+
+function buildApplicationMenu(): void {
+  const menuItems: Array<MenuItem> = [];
+  const isMac = process.platform === 'darwin';
+
+  if (isMac) {
+    menuItems.push(new MenuItem({
+      label:   Electron.app.name,
+      submenu: [
+        {
+          role:  'about',
+          label: `About ${ Electron.app.name }`,
+        },
+        { type: 'separator' },
+        { role: 'services' },
+        { type: 'separator' },
+        { role: 'hide' },
+        { role: 'hideOthers' },
+        { role: 'unhide' },
+        { type: 'separator' },
+        { role: 'quit' },
+      ],
+    }));
+  }
+  menuItems.push(new MenuItem({
+    label:   'File',
+    submenu: [
+      { role: isMac ? 'close' : 'quit' },
+    ]
+  }));
+  if (isMac) {
+    menuItems.push(new MenuItem({
+      label: 'Edit',
+      submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteAndMatchStyle'},
+        {role: 'delete'},
+        {role: 'selectAll'},
+        {type: 'separator'},
+        {
+          label: 'Speech',
+          submenu: [
+            {role: 'startSpeaking'},
+            {role: 'stopSpeaking'},
+          ]
+        }
+      ],
+    }));
+  } else {
+    menuItems.push(new MenuItem({
+      label: 'Edit',
+      submenu: [
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'delete'},
+        {type: 'separator'},
+        {role: 'selectAll'},
+      ],
+    }));
+  }
+
+    // menuItems.push(new MenuItem({
+    //   label: 'Edit',
+    //   submenu: [
+    //     {role: 'undo'},
+    //     {role: 'redo'},
+    //     {type: 'separator'},
+    //     {role: 'cut'},
+    //     {role: 'copy'},
+    //     {role: 'paste'}].concat(
+    //     isMac ? [
+    //       {role: 'pasteAndMatchStyle'},
+    //       {role: 'delete'},
+    //       {role: 'selectAll'},
+    //       {type: 'separator'},
+    //       {
+    //         label: 'Speech',
+    //         submenu: [
+    //           {role: 'startSpeaking'},
+    //           {role: 'stopSpeaking'},
+    //         ]
+    //       }
+    //     ] : [
+    //       {role: 'delete'},
+    //       {type: 'separator'},
+    //       {role: 'selectAll'},
+    //     ]),
+    // }));
+  menuItems.push(new MenuItem({
+    label:   'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { role: 'toggleDevTools' },
+      { type: 'separator' },
+      { role: 'resetZoom' },
+      { role: 'zoomIn' },
+      { role: 'zoomOut' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' },
+    ]
+  }));
+  menuItems.push(new MenuItem({
+    label:   'Window',
+    submenu: [
+      { role: 'minimize' },
+      { role: 'zoom' },
+      { type: 'separator' },
+      { role: 'front' },
+    ]
+  }));
+  const menu = Menu.buildFromTemplate(menuItems);
+
+  Menu.setApplicationMenu(menu);
+}
+
+// function badMenuStuff() {
+//   const submenu = ['undo', 'redo', '--', 'cut', 'copy', 'paste',
+//     'pasteandmatchstyle', 'delete', 'selectall', '--'].map(label => {
+//       if (label === '--') {
+//         return { 'type': 'separator' };
+//       } else {
+//         return { role: label };
+//       };
+//   });
+//   menuItems.push(new MenuItem({
+//     label: 'Edit',
+//     submenu: submenu
+//   }));
+//
+//   const template = menuItems;
+//     new MenuItem({
+//       label: 'File',
+//       submenu: [
+//         { role: 'close' },
+//       ],
+//     }),
+//     new MenuItem({
+//       label:  'Edit',
+//       submenu: [
+//         {
+//           role: 'undo'
+//         },
+//         {
+//           role: 'redo'
+//         },
+//         {
+//           type: 'separator'
+//         },
+//         {
+//           role: 'cut'
+//         },
+//         {
+//           role: 'copy'
+//         },
+//         {
+//           role: 'paste'
+//         },
+//       ]
+//     }),
+//     ];
+//
+//     // ];
+//     //     new class implements Electron.MenuItemConstructorOptions {
+//     //       accelerator: Electron.Accelerator;
+//     //       acceleratorWorksWhenHidden: boolean;
+//     //       after: string[];
+//     //       afterGroupContaining: string[];
+//     //       before: string[];
+//     //       beforeGroupContaining: string[];
+//     //       checked: boolean;
+//     //
+//     //       click(menuItem: Electron.MenuItem, browserWindow: Electron.BrowserWindow | undefined, event: Electron.KeyboardEvent): void {
+//     //       }
+//     //
+//     //       enabled: boolean;
+//     //       icon: Electron.NativeImage | string;
+//     //       id: string;
+//     //       label: string;
+//     //       registerAccelerator: boolean;
+//     //       role: "undo" | "redo" | "cut" | "copy" | "paste" | "pasteAndMatchStyle" | "delete" | "selectAll" | "reload" | "forceReload" | "toggleDevTools" | "resetZoom" | "zoomIn" | "zoomOut" | "togglefullscreen" | "window" | "minimize" | "close" | "help" | "about" | "services" | "hide" | "hideOthers" | "unhide" | "quit" | "startSpeaking" | "stopSpeaking" | "zoom" | "front" | "appMenu" | "fileMenu" | "editMenu" | "viewMenu" | "shareMenu" | "recentDocuments" | "toggleTabBar" | "selectNextTab" | "selectPreviousTab" | "mergeAllWindows" | "clearRecentDocuments" | "moveTabToNewWindow" | "windowMenu";
+//     //       sharingItem: Electron.SharingItem;
+//     //       sublabel: string;
+//     //       submenu: Electron.MenuItemConstructorOptions[] | Electron.Menu;
+//     //       toolTip: string;
+//     //       type: "normal" | "separator" | "submenu" | "checkbox" | "radio";
+//     //       visible: boolean;
+//     //     }
+//     // })
+//
+//   //   {
+//   //     label: 'View',
+//   //     submenu: [
+//   //       {
+//   //         role: 'reload'
+//   //       },
+//   //       {
+//   //         role: 'toggledevtools'
+//   //       },
+//   //       {
+//   //         type: 'separator'
+//   //       },
+//   //       {
+//   //         role: 'resetzoom'
+//   //       },
+//   //       {
+//   //         role: 'zoomin'
+//   //       },
+//   //       {
+//   //         role: 'zoomout'
+//   //       },
+//   //       {
+//   //         type: 'separator'
+//   //       },
+//   //       {
+//   //         role: 'togglefullscreen'
+//   //       }
+//   //     ]
+//   //   },
+//   // ];
+//   const menu = Menu.buildFromTemplate(template);
+//   Menu.setApplicationMenu(menu);
+// }
 
 Electron.app.on('second-instance', () => {
   // Someone tried to run another instance of Rancher Desktop,
