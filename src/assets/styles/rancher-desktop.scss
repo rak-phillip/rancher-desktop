@@ -11,3 +11,15 @@ margin-right: 1em;
         background-color: var(--input-bg);
     }
 }
+
+@keyframes greenfade {
+  from {
+    background: DarkSeaGreen;
+  } to {
+    background: transparent;
+  }
+}
+
+tr.greenfade td {
+  animation: greenfade 2s;
+}
