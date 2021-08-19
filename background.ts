@@ -273,7 +273,7 @@ function buildApplicationMenu(): void {
         },
       },
       {
-        label: '&Slack',
+        label: '&Discuss',
         click() {
           shell.openExternal('https://slack.rancher.io/');
         },
