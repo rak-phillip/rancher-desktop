@@ -4,7 +4,7 @@ import path from 'path';
 import os from 'os';
 import { URL } from 'url';
 
-import Electron, { Menu, MenuItem, MenuItemConstructorOptions, shell } from 'electron';
+import Electron, { Menu, MenuItem, shell } from 'electron';
 
 import _ from 'lodash';
 
