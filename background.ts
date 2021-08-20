@@ -4,7 +4,7 @@ import path from 'path';
 import os from 'os';
 import { URL } from 'url';
 
-import Electron, { Menu, MenuItem, shell } from 'electron';
+import Electron from 'electron';
 
 import _ from 'lodash';
 
@@ -19,6 +19,7 @@ import * as childProcess from '@/utils/childProcess';
 import setupNetworking from '@/main/networking';
 import setupUpdate from '@/main/update';
 import setupTray from '@/main/tray';
+import buildApplicationMenu from '@/main/mainmenu';
 
 Electron.app.setName('Rancher Desktop');
 
@@ -148,142 +149,6 @@ Electron.app.whenReady().then(async() => {
   setupKim(k8smanager);
   setupUpdate(cfg);
 });
-
-function buildApplicationMenu(): void {
-  const menuItems: Array<MenuItem> = [];
-  const isMac = process.platform === 'darwin';
-
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label:   Electron.app.name,
-      submenu: [
-        {
-          role:  'about',
-          label: `About ${ Electron.app.name }`,
-        },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' },
-      ],
-    }));
-  }
-  menuItems.push(new MenuItem({
-    label:   '&File',
-    submenu: [
-      { role: isMac ? 'close' : 'quit' },
-    ]
-  }));
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label:   'Edit',
-      submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        {
-          role:    'pasteAndMatchStyle',
-          enabled: false,
-        },
-        { role: 'delete' },
-        { role: 'selectAll' },
-        { type: 'separator' },
-        {
-          label:   'Speech',
-          enabled: false,
-        }
-      ],
-    }));
-  } else {
-    menuItems.push(new MenuItem({
-      label:   '&Edit',
-      submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'delete' },
-        { type: 'separator' },
-        { role: 'selectAll' },
-      ],
-    }));
-  }
-  menuItems.push(new MenuItem({
-    label:   '&View',
-    submenu: [
-      { role: 'reload' },
-      { role: 'forceReload' },
-      { role: 'toggleDevTools' },
-      { type: 'separator' },
-      { role: 'resetZoom' },
-      { role: 'zoomIn' },
-      { role: 'zoomOut' },
-      { type: 'separator' },
-      { role: 'togglefullscreen' },
-    ]
-  }));
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label:   'Window',
-      submenu: [
-        { role: 'minimize' },
-        { role: 'zoom' },
-        { type: 'separator' },
-        { role: 'front' },
-      ]
-    }));
-  } else {
-    menuItems.push(new MenuItem({
-      label:   '&Window',
-      submenu: [
-        { role: 'minimize' },
-        { role: 'zoom' },
-        { role: 'close' },
-      ]
-    }));
-  }
-  menuItems.push(new MenuItem({
-    label:   '&Help',
-    submenu: [
-      {
-        label: 'Get &Help',
-        click() {
-          shell.openExternal('https://github.com/rancher-sandbox/rancher-desktop/tree/main/docs');
-        },
-      },
-      {
-        label: 'File a &Bug',
-        click() {
-          shell.openExternal('https://github.com/rancher-sandbox/rancher-desktop/issues');
-        },
-      },
-      {
-        label: '&Product Page',
-        click() {
-          shell.openExternal('https://rancherdesktop.io/');
-        },
-      },
-      {
-        label: '&Discuss',
-        click() {
-          shell.openExternal('https://slack.rancher.io/');
-        },
-      },
-    ],
-  }));
-  const menu = Menu.buildFromTemplate(menuItems);
-
-  Menu.setApplicationMenu(menu);
-}
 
 Electron.app.on('second-instance', () => {
   // Someone tried to run another instance of Rancher Desktop,
