@@ -319,7 +319,6 @@ export default {
       this.postOpSuccessHandler = this.postDeleteSuccessHandler;
       this.startRunningCommand('delete');
       ipcRenderer.send('do-image-deletion', obj.imageName.trim(), obj.imageID.trim());
-      ipcRenderer.send('do-image-deletion', obj.imageName.trim(), obj.imageID.trim());
     },
     postDeleteSuccessHandler() {
       if (this.imageManagerOutput === '') {
