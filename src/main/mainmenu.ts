@@ -69,7 +69,7 @@ export default function buildApplicationMenu(): void {
   }
 
   menuItems.push(new MenuItem({
-    label:   'Window',
+    label:   '&Window',
     role:  'windowMenu',
   }));
   menuItems.push(new MenuItem({
