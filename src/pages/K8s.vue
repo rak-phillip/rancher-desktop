@@ -34,6 +34,7 @@
     <integration
       v-if="hasIntegration"
       :integrations="integrations"
+      :integration-warnings="integrationWarnings"
       :title="integrationTitle"
       :description="integrationDescription"
       @integration-set="handleSetIntegration"
@@ -81,7 +82,9 @@ export default {
         max:     0,
       },
       /** @type Record<string, boolean | string> */
-      integrations: {},
+      integrations:        {},
+      /** @type Record<string, Array<string>> */
+      integrationWarnings: {},
     };
   },
 
@@ -191,6 +194,14 @@ export default {
       this.$data.integrations = integrations;
     });
     ipcRenderer.send('k8s-integrations');
+    ipcRenderer.on('k8s-integration-extra-info', (event, name, warnings) => {
+      if (warnings.length === 0) {
+        this.$delete(this.integrationWarnings, name);
+      } else {
+        this.$set(this.integrationWarnings, name, warnings);
+      }
+    });
+    ipcRenderer.send('k8s-integration-extra-info');
   },
 
   methods: {

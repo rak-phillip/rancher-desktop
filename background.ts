@@ -18,6 +18,7 @@ import * as childProcess from '@/utils/childProcess';
 import setupNetworking from '@/main/networking';
 import setupUpdate from '@/main/update';
 import setupTray from '@/main/tray';
+import { PathConflictManager, setupPathWatchersForShadowing } from '@/main/shadowedFileDetector';
 
 Electron.app.setName('Rancher Desktop');
 
@@ -26,6 +27,7 @@ const console = new Console(Logging.background.stream);
 let k8smanager = newK8sManager();
 let cfg: settings.Settings;
 let gone = false; // when true indicates app is shutting down
+let pathConflictManager: PathConflictManager;
 
 if (!Electron.app.requestSingleInstanceLock()) {
   gone = true;
@@ -145,6 +147,10 @@ Electron.app.whenReady().then(async() => {
 
   setupKim(k8smanager);
   setupUpdate(cfg);
+  pathConflictManager = new PathConflictManager();
+  if (os.platform() !== 'win32') {
+    setupPathWatchersForShadowing(pathConflictManager);
+  }
 });
 
 Electron.app.on('second-instance', () => {
@@ -346,6 +352,22 @@ Electron.ipcMain.on('k8s-integration-set', async(event, name: string, newState: 
   }
 });
 
+/** The first time this event is called the data arrives somewhat slowly.
+ *  Shuffle the names so the order varies each time (not by much with only 3 items,
+ *  but as we add more there will be more variation).
+ *  Note that the sorting method is correct -- calling `Math.random` in the actual
+ *  sort comparison function gives bogus results (not that we really care here).
+ */
+Electron.ipcMain.on('k8s-integration-extra-info', async(event) => {
+  const resourceDir = path.dirname(resources.executable('kubectl'));
+  const originalNames = ['kubectl', 'helm', 'kim'];
+  const annotatedNames: Array<[string, number]> = originalNames.map(x => [x, Math.random()]);
+  const shuffledNames = annotatedNames.sort((a, b) => a[1] - b[1]).map(x => x[0]);
+
+  for (const binaryName of shuffledNames as Array<string>) {
+    await pathConflictManager.getConflicts(resourceDir, binaryName, event);
+  }
+});
 /**
  * Do a factory reset of the application.  This will stop the currently running
  * cluster (if any), and delete all of its data.  This will also remove any
