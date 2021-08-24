@@ -160,7 +160,6 @@ export default {
       fieldToClear:                     '',
       imageOutputCuller:                null,
       mainWindowScroll:                 -1,
-      postOpSuccessHandler:             null,
       postCloseOutputWindowHandler:     null,
     };
   },
@@ -340,7 +339,6 @@ export default {
       }
       this.currentCommand = `delete ${ obj.imageName }:${ obj.tag }`;
       this.mainWindowScroll = this.$refs.fullWindow.parentElement.parentElement.scrollTop;
-      this.postOpSuccessHandler = this.postHandleNoOutputHandler;
       this.startRunningCommand('delete');
       ipcRenderer.send('do-image-deletion', obj.imageName.trim(), obj.imageID.trim());
     },
@@ -360,7 +358,6 @@ export default {
 
       this.currentCommand = `build ${ imageName }`;
       this.fieldToClear = 'imageToBuild';
-      this.postOpSuccessHandler = this.postHandleNoOutputHandler;
       this.postCloseOutputWindowHandler = () => this.scrollToImageOnSuccess(imageName);
       this.startRunningCommand('build');
       ipcRenderer.send('do-image-build', imageName);
@@ -370,7 +367,6 @@ export default {
 
       this.currentCommand = `pull ${ imageName }`;
       this.fieldToClear = 'imageToPull';
-      this.postOpSuccessHandler = this.postHandleNoOutputHandler;
       this.postCloseOutputWindowHandler = () => this.scrollToImageOnSuccess(imageName);
       this.startRunningCommand('pull');
       ipcRenderer.send('do-image-pull', imageName);
@@ -456,9 +452,8 @@ export default {
         this.imageManagerOutput = this.imageOutputCuller.getProcessedData();
       }
       this.currentCommand = null;
-      if (this.postOpSuccessHandler) {
-        this.postOpSuccessHandler();
-        this.postOpSuccessHandler = null;
+      if (!this.keepImageManagerOutputWindowOpen) {
+        this.closeOutputWindow();
       }
     },
     isDeletable(row) {
