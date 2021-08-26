@@ -68,7 +68,6 @@ function getHelpMenu(isMac: boolean): MenuItem {
 
   return new MenuItem({
     label:   '&Help',
-    role:    'help',
     submenu: helpMenuItems
   });
 }
