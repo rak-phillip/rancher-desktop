@@ -5,7 +5,6 @@ import os from 'os';
 import { URL } from 'url';
 
 import Electron from 'electron';
-
 import _ from 'lodash';
 
 import mainEvents from '@/main/mainEvents';

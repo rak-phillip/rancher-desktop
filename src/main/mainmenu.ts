@@ -6,21 +6,8 @@ export default function buildApplicationMenu(): void {
 
   if (isMac) {
     menuItems.push(new MenuItem({
-      label:   Electron.app.name,
-      submenu: [
-        {
-          role:  'about',
-          label: `About ${ Electron.app.name }`,
-        },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' },
-      ],
+      label: Electron.app.name,
+      role:  'appMenu',
     }));
   }
 
