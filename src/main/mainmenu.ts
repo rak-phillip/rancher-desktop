@@ -1,74 +1,45 @@
 import Electron, { Menu, MenuItem, MenuItemConstructorOptions, shell } from 'electron';
 
 export default function buildApplicationMenu(): void {
-  const menuItems: Array<MenuItem> = [];
-  const isMac = process.platform === 'darwin';
-  const isWindows = process.platform === 'win32';
+  const menuItems: Array<MenuItem> = getApplicationMenu();
+  const menu = Menu.buildFromTemplate(menuItems);
 
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label: Electron.app.name,
-      role:  'appMenu',
-    }));
+  Menu.setApplicationMenu(menu);
+}
+
+function getApplicationMenu(): Array<MenuItem> {
+  switch (process.platform) {
+  case 'darwin':
+    return getMacApplicationMenu();
+  case 'win32':
+    return getWindowsApplicationMenu();
+  default:
+    throw new Error(`Unsupported platform: ${ process.platform }`);
   }
+}
 
-  menuItems.push(new MenuItem({
-    label: '&File',
-    role:  'fileMenu',
-  }));
+function getEditMenu(isMac: boolean): MenuItem {
+  return new MenuItem({
+    label:   '&Edit',
+    submenu: [
+      { role: 'undo', label: '&Undo' },
+      ...(isMac ? [{ role: 'redo', label: 'Redo' } as MenuItemConstructorOptions] : []),
+      { type: 'separator' },
+      { role: 'cut', label: 'Cu&t' },
+      { role: 'copy', label: '&Copy' },
+      { role: 'paste', label: '&Paste' },
+      { role: 'delete', label: 'De&lete' },
+      ...(!isMac ? [{ type: 'separator' } as MenuItemConstructorOptions] : []),
+      { role: 'selectAll', label: 'Select &All' },
+    ]
+  });
+}
 
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label:   'Edit',
-      submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'delete' },
-        { role: 'selectAll' },
-      ],
-    }));
-  } else {
-    menuItems.push(new MenuItem({
-      label:   '&Edit',
-      role:  'editMenu',
-    }));
-  }
-
-  if (Electron.app.isPackaged) {
-    menuItems.push(new MenuItem({
-      label:   '&View',
-      submenu: [
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
-        { type: 'separator' },
-        { role: 'togglefullscreen' },
-      ]
-    }));
-  } else {
-    menuItems.push(new MenuItem({
-      label: '&View',
-      role:  'viewMenu',
-    }));
-  }
-
-  if (isMac) {
-    menuItems.push(new MenuItem({
-      label: '&Window',
-      role:  'windowMenu',
-    }));
-  }
-
-  const helpMenuItems: Array<MenuItemConstructorOptions> = [];
-
-  if (isWindows) {
-    helpMenuItems.push({ role: 'about' }, { type: 'separator' });
-  }
-  helpMenuItems.push(
+function getHelpMenu(isMac: boolean): MenuItem {
+  const helpMenuItems: Array<MenuItemConstructorOptions> = [
+    ...(!isMac ? [
+      { role: 'about', label: `&About ${ Electron.app.name }` } as MenuItemConstructorOptions,
+      { type: 'separator' } as Electron.MenuItemConstructorOptions] : []),
     {
       label: 'Get &Help',
       click() {
@@ -93,13 +64,74 @@ export default function buildApplicationMenu(): void {
         shell.openExternal('https://slack.rancher.io/');
       },
     },
-  )
-  menuItems.push(new MenuItem({
+  ];
+
+  return new MenuItem({
     label:   '&Help',
     role:    'help',
-    submenu: helpMenuItems,
-  }));
-  const menu = Menu.buildFromTemplate(menuItems);
+    submenu: helpMenuItems
+  });
+}
 
-  Menu.setApplicationMenu(menu);
+function getMacApplicationMenu(): Array<MenuItem> {
+  return [
+    new MenuItem({
+      label: Electron.app.name,
+      role:  'appMenu',
+    }),
+    new MenuItem({
+      label: 'File',
+      role:  'fileMenu',
+    }),
+    getEditMenu(true),
+    Electron.app.isPackaged ? new MenuItem({
+      label:   'View',
+      submenu: [
+        { role: 'resetZoom' },
+        { role: 'zoomIn' },
+        { role: 'zoomOut' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' },
+      ]
+    }) : new MenuItem({
+      label: 'View',
+      role:  'viewMenu',
+    }),
+    new MenuItem({
+      label: '&Window',
+      role:  'windowMenu',
+    }),
+    getHelpMenu(true),
+  ];
+}
+
+function getWindowsApplicationMenu(): Array<MenuItem> {
+  return [
+    new MenuItem({
+      label:   '&File',
+      role:    'fileMenu',
+      submenu: [
+        { role: 'quit', label: 'E&xit' }
+      ]
+    }),
+    getEditMenu(false),
+    new MenuItem({
+      label:   '&View',
+      role:    'viewMenu',
+      submenu: [
+        ...(Electron.app.isPackaged ? [] : [
+          { role: 'reload', label: '&Reload' },
+          { role: 'forceReload', label: '&Force Reload' },
+          { role: 'toggleDevTools', label: 'Toggle &Developer Tools' },
+          { type: 'separator' },
+        ] as MenuItemConstructorOptions[]),
+        { role: 'resetZoom', label: '&Actual Size' },
+        { role: 'zoomIn', label: 'Zoom &In' },
+        { role: 'zoomOut', label: 'Zoom &Out' },
+        { type: 'separator' },
+        { role: 'togglefullscreen', label: 'Toggle Full &Screen' },
+      ]
+    }),
+    getHelpMenu(false),
+  ];
 }
