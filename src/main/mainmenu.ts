@@ -53,7 +53,7 @@ function getHelpMenu(isMac: boolean): MenuItem {
       },
     },
     {
-      label: '&Product Page',
+      label: '&Project Page',
       click() {
         shell.openExternal('https://rancherdesktop.io/');
       },
