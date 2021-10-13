@@ -4,7 +4,19 @@
     <Nav class="nav" :items="routes" />
     <main class="body">
       <section class="title">
-        <h1>{{ title }}</h1>
+        <section class="route">
+          <button
+            v-if="isChild"
+            class="btn role-link btn-sm"
+            type="button"
+            @click="routeBack"
+          >
+            <span
+              class="icon icon-chevron-left"
+            />
+          </button>
+          <h1>{{ title }}</h1>
+        </section>
         <hr>
         <section
           v-show="description"
@@ -41,7 +53,12 @@ export default {
   },
 
   data() {
-    return { routes: ['/General', '/K8s', '/Integrations', '/Images', '/Troubleshooting'] };
+    return {
+      routes: [
+        '/General', '/K8s', '/Integrations', '/Images', '/Troubleshooting'
+      ],
+      isChild: false
+    };
   },
 
   head() {
@@ -60,6 +77,15 @@ export default {
     }),
   },
 
+  watch: {
+    $route: {
+      immediate: true,
+      handler(current, previous) {
+        this.isChild = current.path.lastIndexOf('/') > 0;
+      }
+    }
+  },
+
   mounted() {
     ipcRenderer.invoke('k8s-supports-port-forwarding').then((supported) => {
       if (supported) {
@@ -67,6 +93,13 @@ export default {
       }
     });
   },
+
+  methods: {
+    routeBack() {
+      this.$router.back();
+    }
+  }
+
 };
 </script>
 
@@ -107,6 +140,22 @@ export default {
     grid-template-rows: auto 1fr;
     padding: 20px;
     overflow: auto;
+  }
+
+  .route {
+    display: flex;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+    font-weight: bolder;
+    font-size: 24px;
+  }
+
+  .btn:focus {
+    outline: none;
+    box-shadow: none;
+    background: var(--input-focus-bg);
   }
 }
 
