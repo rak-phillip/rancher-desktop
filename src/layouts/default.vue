@@ -4,10 +4,10 @@
     <Nav class="nav" :items="routes" />
     <main class="body">
       <section class="title">
-        <section class="route">
+        <section class="title-top">
           <button
             v-if="isChild"
-            class="btn role-link btn-sm"
+            class="btn role-link btn-sm btn-back"
             type="button"
             @click="routeBack"
           >
@@ -16,6 +16,12 @@
             />
           </button>
           <h1>{{ title }}</h1>
+          <section
+            v-if="action"
+            class="actions"
+          >
+            <component :is="action" />
+          </section>
         </section>
         <hr>
         <section
@@ -39,6 +45,7 @@ import os from 'os';
 import ActionMenu from '@/components/ActionMenu.vue';
 import Header from '@/components/Header.vue';
 import Nav from '@/components/Nav.vue';
+import ImagesButtonAdd from '@/components/ImagesButtonAdd.vue';
 import BackendProgress from '@/components/BackendProgress.vue';
 import { ipcRenderer } from 'electron';
 import { mapState } from 'vuex';
@@ -50,6 +57,7 @@ export default {
     Nav,
     Header,
     BackendProgress,
+    ImagesButtonAdd,
   },
 
   data() {
@@ -73,7 +81,8 @@ export default {
   computed: {
     ...mapState('page', {
       title:       state => state.title,
-      description: state => state.description
+      description: state => state.description,
+      action:      state => state.action
     }),
   },
 
@@ -142,20 +151,24 @@ export default {
     overflow: auto;
   }
 
-  .route {
+  .title-top{
     display: flex;
   }
 
-  .btn {
+  .btn-back {
     margin-bottom: 10px;
     font-weight: bolder;
     font-size: 24px;
   }
 
-  .btn:focus {
+  .btn-back:focus {
     outline: none;
     box-shadow: none;
     background: var(--input-focus-bg);
+  }
+
+  .actions {
+    margin-left: auto;
   }
 }
 
