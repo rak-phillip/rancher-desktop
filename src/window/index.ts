@@ -128,6 +128,7 @@ function openDialog(id: string, opts?: Electron.BrowserWindowConstructorOptions)
       show:            false,
       useContentSize:  true,
       modal:           true,
+      resizable:       false,
       ...opts ?? {},
       webPreferences:  {
         devTools:                !app.isPackaged,
@@ -151,23 +152,11 @@ function openDialog(id: string, opts?: Electron.BrowserWindowConstructorOptions)
   });
 
   window.webContents.on('preferred-size-changed', (_event, { width, height }) => {
-    if (windowState === 'sized') {
-      // Once the window is done sizing, don't do any more automatic resizing.
-      return;
-    }
-    window.setMinimumSize(width, height);
     window.setContentSize(width, height);
 
     const [windowWidth, windowHeight] = window.getSize();
 
     window.setMinimumSize(windowWidth, windowHeight);
-    if (windowState === 'shown') {
-      // We get a few resizes in a row until things settle down; use a timeout
-      // to let things stablize before we stop responding resize events.
-      setTimeout(() => {
-        windowState = 'sized';
-      }, 100);
-    }
   });
 
   return window;
