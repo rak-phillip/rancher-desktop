@@ -88,6 +88,7 @@ export default Vue.extend({
     display: flex;
     flex-grow: 1;
     flex-flow: column;
+    width: 48rem;
   }
   .k8s-error {
     display: flex;
@@ -95,7 +96,7 @@ export default Vue.extend({
     flex-flow: column;
   }
   pre#log-lines {
-    height: 8rem;
+    max-height: 8rem;
     white-space: pre-wrap;
     text-indent: -4em;
     padding-left: 4em;
@@ -111,14 +112,6 @@ export default Vue.extend({
     margin-bottom: 1.5rem;
     h4 {
       margin-top: auto;
-    }
-    &.grow {
-      display: flex;
-      flex-flow: column;
-      flex-grow: 1;
-      & > *:not(h4) {
-        flex-grow: 1;
-      }
     }
   }
 
