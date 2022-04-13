@@ -63,15 +63,13 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss">
-  :root {
-    min-width: 30em;
-  }
-</style>
-
 <style lang="scss" scoped>
   .contents {
-    padding: 2em;
+    min-width: 30em;
+    max-width: 30em;
+  }
+  ul {
+    overflow: auto;
   }
   li.monospace {
     /* font-family is set in _typography.scss */
