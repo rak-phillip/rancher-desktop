@@ -30,7 +30,7 @@ import getCommandLineArgs from '@/utils/commandLine';
 import DockerDirManager from '@/utils/dockerDirManager';
 import Logging, { setLogLevel } from '@/utils/logging';
 import paths from '@/utils/paths';
-import { setupProtocolHandler, protocolRegistered } from '@/utils/protocols';
+import { setupProtocolHandler, setupProtocolDashboard, protocolRegistered } from '@/utils/protocols';
 import { jsonStringifyWithWhiteSpace } from '@/utils/stringify';
 import { RecursivePartial } from '@/utils/typeUtils';
 import * as window from '@/window';
@@ -79,6 +79,7 @@ if (!Electron.app.requestSingleInstanceLock()) {
 // Scheme must be registered before the app is ready
 Electron.protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
+  { scheme: 'dashboard', privileges: { secure: true, standard: true } },
 ]);
 
 process.on('unhandledRejection', (reason: any, promise: any) => {
@@ -145,6 +146,7 @@ Electron.app.whenReady().then(async() => {
 
     installDevtools();
     setupProtocolHandler();
+    setupProtocolDashboard();
 
     await integrationManager.enforce();
     await doFirstRun();

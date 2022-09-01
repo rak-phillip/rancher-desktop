@@ -2,7 +2,7 @@ import { BrowserWindow } from 'electron';
 
 import { windowMapping, restoreWindow } from '.';
 
-const dashboardURL = 'http://127.0.0.1:9080/dashboard/c/local/explorer';
+const dashboardURL = 'dashboard://.';
 
 const getDashboardWindow = () => ('dashboard' in windowMapping) ? BrowserWindow.fromId(windowMapping['dashboard']) : null;
 
@@ -20,7 +20,9 @@ export function openDashboard() {
     show:   false,
   });
 
-  window.loadURL(dashboardURL);
+  window.webContents.openDevTools();
+
+  window.loadURL(`${ dashboardURL }/index.html`);
 
   windowMapping['dashboard'] = window.id;
 

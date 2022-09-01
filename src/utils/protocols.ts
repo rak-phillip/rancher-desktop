@@ -79,8 +79,43 @@ export function setupProtocolHandler() {
 
   registrationProtocol('app', (request, callback) => {
     const relPath = decodeURI(new URL(request.url).pathname);
+
+    console.log('NOT FAIL', 'REGISTER APP PROTOCOL');
     const redirectUrl = redirectedUrl(relPath);
+
+    console.log('APP RELPATH', { relPath });
     const result = getProtocolResponse(request, redirectUrl, relPath);
+
+    callback(result);
+  });
+
+  protocolRegistered.resolve();
+}
+
+export function setupProtocolDashboard() {
+  protocol.registerFileProtocol('dashboard', (request, callback) => {
+    console.log('NOT FAIL', 'REGISTER DASHBOARD PROTOCOL');
+    const relPath = decodeURI(new URL(request.url).pathname);
+
+    console.log('DASHBOARD RELPATH', { relPath });
+    const redirectPath = path.join(app.getAppPath(), 'resources', 'rancher-dashboard', relPath);
+
+    console.log('DASHBOARD REDIRECTPATH', { redirectPath });
+
+    const mimeTypeMap: Record<string, string> = {
+      css:  'text/css',
+      html: 'text/html',
+      js:   'text/javascript',
+      json: 'application/json',
+      png:  'image/png',
+      svg:  'image/svg+xml',
+    };
+    const mimeType = mimeTypeMap[path.extname(relPath).toLowerCase().replace(/^\./, '')];
+
+    const result: ProtocolResponse = {
+      path:     redirectPath,
+      mimeType: mimeType || 'text/html',
+    };
 
     callback(result);
   });
