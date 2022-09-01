@@ -58,7 +58,9 @@ function getProtocolResponse(
   const mimeType = mimeTypeMap[path.extname(relPath).toLowerCase().replace(/^\./, '')];
 
   return {
-    path:     redirectUrl,
+    method:   request.method,
+    referrer: request.referrer,
+    url:      redirectUrl,
     mimeType: mimeType || 'text/html',
   };
 }
@@ -75,7 +77,7 @@ export const protocolRegistered = Latch();
  * production environments.
  */
 export function setupProtocolHandler() {
-  const registrationProtocol = isDevEnv ? protocol.registerHttpProtocol : protocol.registerFileProtocol;
+  const registrationProtocol = isDevEnv ? protocol.registerHttpProtocol : protocol.registerHttpProtocol;
 
   registrationProtocol('app', (request, callback) => {
     const relPath = decodeURI(new URL(request.url).pathname);
