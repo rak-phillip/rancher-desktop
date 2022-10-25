@@ -73,15 +73,15 @@ export default {
     ipcRenderer.on('update-state', this.onUpdateState);
     ipcRenderer.send('update-state');
     ipcRenderer.on('settings-read', (event, settings) => {
-      this.$data.settings = settings;
+      this.settings = settings;
     });
     ipcRenderer.send('settings-read');
     ipcRenderer.on('get-app-version', (event, version) => {
-      this.$data.version = version;
+      this.version = version;
     });
     ipcRenderer.send('get-app-version');
     ipcRenderer.on('update-network-status', (event, status) => {
-      this.$data.networkStatus = status;
+      this.networkStatus = status;
     });
     this.onNetworkUpdate(window.navigator.onLine);
     window.addEventListener('online', () => {
@@ -104,7 +104,7 @@ export default {
 
   methods: {
     onSettingsUpdate(event, settings) {
-      this.$data.settings = settings;
+      this.settings = settings;
     },
     onUpdateEnabled(value) {
       ipcRenderer.invoke('settings-write', { updater: value });
@@ -113,7 +113,7 @@ export default {
       ipcRenderer.send('update-apply');
     },
     onUpdateState(event, state) {
-      this.$data.updateState = state;
+      this.updateState = state;
     },
     updateTelemetry(value) {
       ipcRenderer.invoke('settings-write', { telemetry: value });

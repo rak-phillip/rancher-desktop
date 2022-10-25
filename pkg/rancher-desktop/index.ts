@@ -1,7 +1,7 @@
 import { importTypes } from '@rancher/auto-import';
 import { IPlugin } from '@shell/core/types';
 
-import NotFail from './NotFail.vue';
+import routes from './router';
 
 // Init the package
 export default function(plugin: IPlugin) {
@@ -14,9 +14,5 @@ export default function(plugin: IPlugin) {
   // Load a product
   plugin.addProduct(require('./product'));
 
-  plugin.addRoute({
-    name:      'rancher-desktop',
-    path:      '/rancher-desktop',
-    component: NotFail,
-  });
+  plugin.addRoutes(routes);
 }

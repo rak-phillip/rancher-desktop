@@ -58,25 +58,25 @@ export default Vue.extend({
       { title: this.t('portForwarding.title') },
     );
     ipcRenderer.on('k8s-check-state', (event, state) => {
-      this.$data.state = state;
+      this.state = state;
     });
     ipcRenderer.on('service-changed', (event, services) => {
-      this.$data.services = services;
+      this.services = services;
     });
     ipcRenderer.on('service-error', (event, problemService, errorMessage) => {
       ipcRenderer.invoke('service-forward', problemService, false);
-      this.$data.errorMessage = errorMessage;
+      this.errorMessage = errorMessage;
     });
     ipcRenderer.invoke('service-fetch')
       .then((services) => {
-        this.$data.services = services;
+        this.services = services;
       });
     ipcRenderer.on('settings-update', (event, settings) => {
       // TODO: put in a status bar
-      this.$data.settings = settings;
+      this.settings = settings;
     });
     ipcRenderer.on('settings-read', (event, settings) => {
-      this.$data.settings = settings;
+      this.settings = settings;
     });
     ipcRenderer.send('settings-read');
   },
@@ -99,19 +99,6 @@ export default Vue.extend({
       return service1.name === service2.name &&
         service1.namespace === service2.namespace &&
         service1.port === service2.port;
-    },
-
-    findServiceMatching(serviceToMatch: ServiceEntry | undefined, serviceList: ServiceEntry[]): ServiceEntry | undefined {
-      if (!serviceToMatch) {
-        return undefined;
-      }
-      const compareServices = (service1: ServiceEntry, service2: ServiceEntry) => {
-        return service1.name === service2.name &&
-          service1.namespace === service2.namespace &&
-          service1.port === service2.port;
-      };
-
-      return serviceList.find(service => compareServices(service, serviceToMatch));
     },
 
     handleEditPortForward(service: ServiceEntry): void {

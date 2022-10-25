@@ -56,15 +56,10 @@ export default {
   data() {
     return {
       image:                            this.$route.params.image,
-      showImageOutput:                  true,
-      imageManagerOutput:               '',
       imageOutputCuller:                null,
-      keepImageManagerOutputWindowOpen: false,
       currentCommand:                   null,
-      fieldToClear:                     '',
       completionStatus:                 false,
       jsonOutput:                       'null',
-      postCloseOutputWindowHandler:     null,
     };
   },
 
@@ -72,14 +67,8 @@ export default {
     isFinishedWithSuccess() {
       return this.isFinished && this.completionStatus;
     },
-    imageManagerProcessFinishedWithFailure() {
-      return this.isFinished && !this.completionStatus;
-    },
     isFinished() {
       return !this.currentCommand;
-    },
-    showImageManagerOutput() {
-      return this.keepImageManagerOutputWindowOpen;
     },
     showOutput() {
       return !this.isFinished && !this.isFinishedWithSuccess;

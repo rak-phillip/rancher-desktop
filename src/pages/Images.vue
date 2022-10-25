@@ -95,23 +95,23 @@ export default {
 
     ipcRenderer.on('settings-update', (event, settings) => {
       // TODO: put in a status bar
-      this.$data.settings = settings;
+      this.settings = settings;
       this.checkSelectedNamespace();
     });
 
     (async() => {
-      this.$data.images = await ipcRenderer.invoke('images-mounted', true);
+      this.images = await ipcRenderer.invoke('images-mounted', true);
     })();
 
     ipcRenderer.on('images-namespaces', (event, namespaces) => {
       // TODO: Use a specific message to indicate whether messages are supported or not.
-      this.$data.imageNamespaces = namespaces;
-      this.$data.supportsNamespaces = namespaces.length > 0;
+      this.imageNamespaces = namespaces;
+      this.supportsNamespaces = namespaces.length > 0;
       this.checkSelectedNamespace();
     });
     ipcRenderer.send('images-namespaces-read');
     ipcRenderer.on('settings-read', (event, settings) => {
-      this.$data.settings = settings;
+      this.settings = settings;
     });
     ipcRenderer.send('settings-read');
   },

@@ -77,11 +77,11 @@ export default Vue.extend({
   },
   mounted() {
     ipcRenderer.on('dialog/populate', (event, titlePart, mainMessage, failureDetails) => {
-      this.$data.titlePart = titlePart;
-      this.$data.mainMessage = mainMessage;
-      this.$data.lastCommand = failureDetails.lastCommand;
-      this.$data.lastCommandComment = failureDetails.lastCommandComment;
-      this.$data.lastLogLines = failureDetails.lastLogLines;
+      this.titlePart = titlePart;
+      this.mainMessage = mainMessage;
+      this.lastCommand = failureDetails.lastCommand;
+      this.lastCommandComment = failureDetails.lastCommandComment;
+      this.lastLogLines = failureDetails.lastLogLines;
     });
     // Tell the dialog layout to set flex on the height.
     document.documentElement.setAttribute('data-flex', 'height');

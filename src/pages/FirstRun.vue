@@ -115,7 +115,7 @@ export default Vue.extend({
   },
   mounted() {
     ipcRenderer.on('settings-read', (event, settings) => {
-      this.$data.settings = settings;
+      this.settings = settings;
     });
     ipcRenderer.send('settings-read');
     ipcRenderer.on('k8s-versions', (event, versions, cachedVersionsOnly) => {

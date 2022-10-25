@@ -1,6 +1,3 @@
-<router lang="yaml">
-  name: General
-</router>
 <template>
   <div>
     <div class="general">
@@ -34,11 +31,11 @@
 </template>
 
 <script>
-import { ipcRenderer } from 'electron';
 
-import TelemetryOptIn from '@/components/TelemetryOptIn.vue';
-import UpdateStatus from '@/components/UpdateStatus.vue';
-import { defaultSettings } from '@/config/settings';
+import TelemetryOptIn from '@pkg/components/TelemetryOptIn.vue';
+import UpdateStatus from '@pkg/components/UpdateStatus.vue';
+import { defaultSettings } from '@pkg/config/settings';
+import { ipcRenderer } from 'electron';
 
 export default {
   name:       'General',

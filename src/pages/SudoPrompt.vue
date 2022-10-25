@@ -63,7 +63,6 @@ export default Vue.extend({
   data() {
     return {
       explanations:    {} as Partial<Record<SudoReason, string[]>>,
-      sized:        false,
       suppress:        false,
       SUDO_REASON_DESCRIPTION,
     };

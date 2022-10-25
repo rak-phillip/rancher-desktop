@@ -102,14 +102,14 @@ export default {
       { title: this.t('troubleshooting.title') },
     );
     ipcRenderer.on('k8s-check-state', (_, newState) => {
-      this.$data.state = newState;
+      this.state = newState;
     });
     ipcRenderer.on('settings-read', (_, newSettings) => {
-      this.$data.settings = newSettings;
-      this.$data.isDebugging = runInDebugMode(newSettings.debug);
+      this.settings = newSettings;
+      this.isDebugging = runInDebugMode(newSettings.debug);
     });
     ipcRenderer.on('settings-update', (_, newSettings) => {
-      this.$data.settings = newSettings;
+      this.settings = newSettings;
     });
     ipcRenderer.send('settings-read');
   },
@@ -149,7 +149,7 @@ export default {
       ipcRenderer.send('troubleshooting/show-logs');
     },
     updateDebug(value) {
-      this.$data.isDebugging = runInDebugMode(value);
+      this.isDebugging = runInDebugMode(value);
       ipcRenderer.invoke('settings-write', { debug: value });
     },
     async resetKubernetes() {

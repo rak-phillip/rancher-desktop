@@ -36,6 +36,7 @@ module.exports = {
     'unicorn/no-new-buffer':    'off',
     'vue/html-self-closing':    'off',
     'vue/no-unused-components': 'warn',
+    'vue/no-unused-properties': ['error', { groups: ['props', 'data', 'computed', 'methods', 'setup'] }],
     'vue/no-v-html':            'off',
     'wrap-iife':                'off',
 

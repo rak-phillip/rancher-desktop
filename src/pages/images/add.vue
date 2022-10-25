@@ -47,14 +47,6 @@ export default {
       showOutput:                       false,
     };
   },
-  computed: {
-    imageToPullButtonDisabled() {
-      return this.imageToPullTextFieldIsDisabled || !this.imageToPull;
-    },
-    imageToPullTextFieldIsDisabled() {
-      return this.currentCommand;
-    },
-  },
   mounted() {
     this.$store.dispatch(
       'page/setHeader',

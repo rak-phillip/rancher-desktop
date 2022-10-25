@@ -3,20 +3,20 @@ export const NAME = 'rancher-desktop';
 export function init(plugin, store) {
   const {
     product,
-    _basicType,
-    _configureType,
-    _virtualType,
-    _headers,
-    _hideBulkActions,
+    basicType,
+    configureType,
+    virtualType,
+    headers,
+    hideBulkActions,
   } = plugin.DSL(store, NAME);
 
   product({
     inStore:             'management',
     icon:                'globe',
-    label:               'rancher-desktop',
+    label:               'Rancher Desktop',
     removable:           false,
     showClusterSwitcher: false,
     category:            'global',
-    to:                  { name: 'rancher-desktop', params: { cluster: 'local' } },
+    to:                  { name: 'rancher-desktop-general' },
   });
 }

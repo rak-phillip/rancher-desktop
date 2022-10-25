@@ -15,7 +15,6 @@ export default Vue.extend({
       detail:          '',
       checkboxLabel:   '',
       buttons:         [],
-      response:        0,
       checkboxChecked: false,
       cancelId:        0,
     };
