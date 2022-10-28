@@ -4,13 +4,13 @@ import path from 'path';
 import * as k8s from '@kubernetes/client-node';
 import { KubeConfig } from '@kubernetes/client-node/dist/config';
 
-import { VMBackend, VMExecutor } from '@/backend/backend';
-import * as imageProcessor from '@/backend/images/imageProcessor';
-import * as K8s from '@/backend/k8s';
-import mainEvents from '@/main/mainEvents';
-import * as childProcess from '@/utils/childProcess';
-import Logging from '@/utils/logging';
-import resources from '@/utils/resources';
+import { VMBackend, VMExecutor } from '@pkg/backend/backend';
+import * as imageProcessor from '@pkg/backend/images/imageProcessor';
+import * as K8s from '@pkg/backend/k8s';
+import mainEvents from '@pkg/main/mainEvents';
+import * as childProcess from '@pkg/utils/childProcess';
+import Logging from '@pkg/utils/logging';
+import resources from '@pkg/utils/resources';
 
 const console = Logging.images;
 

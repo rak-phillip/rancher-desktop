@@ -3,7 +3,7 @@
 import childProcess, { spawn } from 'child_process';
 import process from 'process';
 
-import resources from '@/utils/resources';
+import resources from '@pkg/utils/resources';
 
 // The K8s JS library will get the current context but does not have the ability
 // to save the context. The current version of the package targets k8s 1.18 and

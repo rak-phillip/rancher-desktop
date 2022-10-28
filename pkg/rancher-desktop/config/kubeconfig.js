@@ -6,7 +6,7 @@ const pth = require('path');
 // const k8s = require('@kubernetes/client-node');
 
 // TODO: Stop using the next module (and delete) after kubernetes-client/javascript/pull/748 lands
-const findHomeDir = require('@/config/findHomeDir');
+const findHomeDir = require('@pkg/config/findHomeDir');
 
 // Get the path to the kubeconfig file. This is dependent on where this is run.
 function path() {

@@ -130,7 +130,10 @@ export default {
       externals: [...Object.keys(this.packageMeta.dependencies)],
       devtool:   this.isDevelopment ? 'source-map' : false,
       resolve:   {
-        alias:      { '@': path.resolve(this.rootDir, 'pkg', 'rancher-desktop') },
+        alias: {
+          '@':    path.resolve(this.rootDir, 'pkg', 'rancher-desktop'),
+          '@pkg': path.resolve(this.rootDir, 'pkg', 'rancher-desktop'),
+        },
         extensions: ['.ts', '.js', '.json'],
         modules:    ['node_modules'],
       },

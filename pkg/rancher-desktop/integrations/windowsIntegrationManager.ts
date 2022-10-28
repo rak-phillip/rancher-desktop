@@ -1,19 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-import K3sHelper from '@/backend/k3sHelper';
-import { State } from '@/backend/k8s';
-import { findHomeDir } from '@/config/findHomeDir';
-import { Settings, ContainerEngine, runInDebugMode } from '@/config/settings';
-import type { IntegrationManager } from '@/integrations/integrationManager';
-import mainEvents from '@/main/mainEvents';
-import BackgroundProcess from '@/utils/backgroundProcess';
-import { spawn, spawnFile } from '@/utils/childProcess';
-import clone from '@/utils/clone';
-import Logging from '@/utils/logging';
-import paths from '@/utils/paths';
-import resources from '@/utils/resources';
-import { defined, RecursivePartial } from '@/utils/typeUtils';
+import K3sHelper from '@pkg/backend/k3sHelper';
+import { State } from '@pkg/backend/k8s';
+import { findHomeDir } from '@pkg/config/findHomeDir';
+import { Settings, ContainerEngine, runInDebugMode } from '@pkg/config/settings';
+import type { IntegrationManager } from '@pkg/integrations/integrationManager';
+import mainEvents from '@pkg/main/mainEvents';
+import BackgroundProcess from '@pkg/utils/backgroundProcess';
+import { spawn, spawnFile } from '@pkg/utils/childProcess';
+import clone from '@pkg/utils/clone';
+import Logging from '@pkg/utils/logging';
+import paths from '@pkg/utils/paths';
+import resources from '@pkg/utils/resources';
+import { defined, RecursivePartial } from '@pkg/utils/typeUtils';
 
 const console = Logging.integrations;
 

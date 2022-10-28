@@ -13,10 +13,10 @@ import paging from './paging';
 import selection from './selection';
 import sorting from './sorting';
 
-import ActionDropdown from '@/components/ActionDropdown';
-import { removeObject } from '@/utils/array';
-import { get, clone } from '@/utils/object';
-import { dasherize, ucFirst } from '@/utils/string';
+import ActionDropdown from '@pkg/components/ActionDropdown';
+import { removeObject } from '@pkg/utils/array';
+import { get, clone } from '@pkg/utils/object';
+import { dasherize, ucFirst } from '@pkg/utils/string';
 
 export const COLUMN_BREAKPOINTS = {
   /**

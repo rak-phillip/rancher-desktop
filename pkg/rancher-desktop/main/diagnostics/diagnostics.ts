@@ -1,7 +1,7 @@
 import { DiagnosticsCategory, DiagnosticsChecker, DiagnosticsCheckerResult } from './types';
 
-import mainEvents from '@/main/mainEvents';
-import Logging from '@/utils/logging';
+import mainEvents from '@pkg/main/mainEvents';
+import Logging from '@pkg/utils/logging';
 
 const console = Logging.diagnostics;
 

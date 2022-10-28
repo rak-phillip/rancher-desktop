@@ -22,6 +22,13 @@ export default {
       webpackConfig.target = 'electron-renderer';
       // Set a resolver alias for `./@` so that we can load things from @ in CSS
       webpackConfig.resolve.alias['./@'] = __dirname;
+      webpackConfig.resolve.alias['./@pkg'] = __dirname;
+
+      console.log('NOT FAIL');
+      console.log('NOT FAIL');
+      console.log({ dirName: __dirname });
+      console.log('NOT FAIL');
+      console.log('NOT FAIL');
 
       // Add necessary loaders
       webpackConfig.module.rules.push({

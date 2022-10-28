@@ -1,13 +1,13 @@
 import { spawn } from 'child_process';
 import path from 'path';
 
-import { VMBackend, VMExecutor } from '@/backend/backend';
-import * as imageProcessor from '@/backend/images/imageProcessor';
-import * as K8s from '@/backend/k8s';
-import mainEvents from '@/main/mainEvents';
-import Logging from '@/utils/logging';
-import resources from '@/utils/resources';
-import * as window from '@/window';
+import { VMBackend, VMExecutor } from '@pkg/backend/backend';
+import * as imageProcessor from '@pkg/backend/images/imageProcessor';
+import * as K8s from '@pkg/backend/k8s';
+import mainEvents from '@pkg/main/mainEvents';
+import Logging from '@pkg/utils/logging';
+import resources from '@pkg/utils/resources';
+import * as window from '@pkg/window';
 
 const console = Logging.images;
 

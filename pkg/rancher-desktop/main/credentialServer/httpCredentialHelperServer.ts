@@ -5,13 +5,13 @@ import path from 'path';
 import stream from 'stream';
 import { URL } from 'url';
 
-import { findHomeDir } from '@/config/findHomeDir';
-import { getVtunnelInstance } from '@/main/networking/vtunnel';
-import * as serverHelper from '@/main/serverHelper';
-import * as childProcess from '@/utils/childProcess';
-import Logging from '@/utils/logging';
-import paths from '@/utils/paths';
-import { jsonStringifyWithWhiteSpace } from '@/utils/stringify';
+import { findHomeDir } from '@pkg/config/findHomeDir';
+import { getVtunnelInstance } from '@pkg/main/networking/vtunnel';
+import * as serverHelper from '@pkg/main/serverHelper';
+import * as childProcess from '@pkg/utils/childProcess';
+import Logging from '@pkg/utils/logging';
+import paths from '@pkg/utils/paths';
+import { jsonStringifyWithWhiteSpace } from '@pkg/utils/stringify';
 
 export type ServerState = {
   user: string;

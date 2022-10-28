@@ -3,7 +3,7 @@ import Vue from 'vue';
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 
-import RdFieldset from '@/components/form/RdFieldset.vue';
+import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 
 export default Vue.extend({
   name:       'rd-slider',

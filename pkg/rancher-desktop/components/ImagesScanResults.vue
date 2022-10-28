@@ -1,7 +1,7 @@
 <script>
 import { BadgeState } from '@rancher/components';
 
-import SortableTable from '@/components/SortableTable';
+import SortableTable from '@pkg/components/SortableTable';
 
 const SEVERITY_MAP = {
   LOW:      {
