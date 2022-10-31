@@ -1,6 +1,5 @@
-import Electron, { Menu, MenuItem, MenuItemConstructorOptions, shell } from 'electron';
-
 import { openMain } from '@pkg/window';
+import Electron, { Menu, MenuItem, MenuItemConstructorOptions, shell } from 'electron';
 
 export default function buildApplicationMenu(): void {
   const menuItems: Array<MenuItem> = getApplicationMenu();

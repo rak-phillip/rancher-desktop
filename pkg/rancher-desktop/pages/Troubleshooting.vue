@@ -74,10 +74,10 @@
 </template>
 
 <script>
-import { Checkbox } from '@rancher/components';
 
 import TroubleshootingLineItem from '@pkg/components/TroubleshootingLineItem.vue';
 import { defaultSettings, runInDebugMode } from '@pkg/config/settings';
+import { Checkbox } from '@rancher/components';
 
 const { ipcRenderer } = require('electron');
 

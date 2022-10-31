@@ -1,11 +1,11 @@
 <script lang="ts">
+import PathManagementSelector from '@pkg/components/PathManagementSelector.vue';
+import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import { ipcRenderer } from 'electron';
 import Vue from 'vue';
 import { mapGetters } from 'vuex';
 
-import PathManagementSelector from '@pkg/components/PathManagementSelector.vue';
 import type { Settings } from '@pkg/config/settings';
-import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 
 export default Vue.extend({
   name:       'path-update',

@@ -1,10 +1,10 @@
 <script lang="ts">
-import Vue from 'vue';
 
 import EngineSelector from '@pkg/components/EngineSelector.vue';
 import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 import { ContainerEngine, Settings } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
+import Vue from 'vue';
 
 import type { PropType } from 'vue';
 

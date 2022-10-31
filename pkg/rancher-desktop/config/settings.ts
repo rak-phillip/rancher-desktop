@@ -5,13 +5,12 @@ import fs from 'fs';
 import os from 'os';
 import { dirname, join } from 'path';
 
-import _ from 'lodash';
-
 import { TransientSettings } from '@pkg/config/transientSettings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import clone from '@pkg/utils/clone';
 import Logging from '@pkg/utils/logging';
 import paths from '@pkg/utils/paths';
+import _ from 'lodash';
 
 const console = Logging.settings;
 

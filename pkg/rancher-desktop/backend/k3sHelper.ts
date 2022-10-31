@@ -9,13 +9,6 @@ import util from 'util';
 
 import { CustomObjectsApi, KubeConfig, V1ObjectMeta } from '@kubernetes/client-node';
 import { ActionOnInvalid } from '@kubernetes/client-node/dist/config_types';
-import _ from 'lodash';
-import { Response } from 'node-fetch';
-import semver from 'semver';
-import yaml from 'yaml';
-
-import { Architecture, VMExecutor } from './backend';
-
 import { KubeClient } from '@pkg/backend/client';
 import * as K8s from '@pkg/backend/k8s';
 import { loadFromString, exportConfig } from '@pkg/backend/kubeconfig';
@@ -34,6 +27,12 @@ import { jsonStringifyWithWhiteSpace } from '@pkg/utils/stringify';
 import { defined, RecursivePartial, RecursiveTypes } from '@pkg/utils/typeUtils';
 // TODO: Replace with the k8s version after kubernetes-client/javascript/pull/748 lands
 import { showMessageBox } from '@pkg/window';
+import _ from 'lodash';
+import { Response } from 'node-fetch';
+import semver from 'semver';
+import yaml from 'yaml';
+
+import { Architecture, VMExecutor } from './backend';
 
 import type Electron from 'electron';
 

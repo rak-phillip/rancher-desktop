@@ -3,11 +3,11 @@ export const NAME = 'rancher-desktop';
 export function init(plugin, store) {
   const {
     product,
-    basicType,
-    configureType,
-    virtualType,
-    headers,
-    hideBulkActions,
+    // basicType,
+    // configureType,
+    // virtualType,
+    // headers,
+    // hideBulkActions,
   } = plugin.DSL(store, NAME);
 
   product({

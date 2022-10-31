@@ -1,5 +1,4 @@
 import type { UpperSnakeCase } from '@pkg/utils/typeUtils';
-
 import type { CommitOptions, Dispatch } from 'vuex';
 
 type MutationsPayloadType<T> = {

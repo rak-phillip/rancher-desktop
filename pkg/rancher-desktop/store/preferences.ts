@@ -1,12 +1,11 @@
+import { defaultSettings, Settings } from '@pkg/config/settings';
+import { RecursiveKeys, RecursivePartial, RecursiveTypes } from '@pkg/utils/typeUtils';
 import { ipcRenderer } from 'electron';
 import _ from 'lodash';
 
 import { ActionContext, MutationsType } from './ts-helpers';
 
-import { defaultSettings, Settings } from '@pkg/config/settings';
 import type { ServerState } from '@pkg/main/commandServer/httpCommandServer';
-import { RecursiveKeys, RecursivePartial, RecursiveTypes } from '@pkg/utils/typeUtils';
-
 import type { GetterTree } from 'vuex';
 
 interface Severities {

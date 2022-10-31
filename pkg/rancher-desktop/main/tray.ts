@@ -6,9 +6,6 @@ import os from 'os';
 import path from 'path';
 
 import { KubeConfig } from '@kubernetes/client-node';
-import Electron from 'electron';
-import yaml from 'yaml';
-
 import { State } from '@pkg/backend/k8s';
 import * as kubectl from '@pkg/backend/kubectl';
 import kubeconfig from '@pkg/config/kubeconfig.js';
@@ -19,6 +16,8 @@ import Logging from '@pkg/utils/logging';
 import paths from '@pkg/utils/paths';
 import { openMain, send } from '@pkg/window';
 import { openDashboard } from '@pkg/window/dashboard';
+import Electron from 'electron';
+import yaml from 'yaml';
 
 const console = Logging.background;
 

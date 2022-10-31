@@ -5,10 +5,11 @@
 
 import { EventEmitter } from 'events';
 
+import { RecursivePartial, RecursiveReadonly } from '@pkg/utils/typeUtils';
+
 import type { VMBackend } from '@pkg/backend/backend';
 import type { Settings } from '@pkg/config/settings';
 import type { TransientSettings } from '@pkg/config/transientSettings';
-import { RecursivePartial, RecursiveReadonly } from '@pkg/utils/typeUtils';
 
 /**
  * MainEventNames describes the events available over the MainEvents event

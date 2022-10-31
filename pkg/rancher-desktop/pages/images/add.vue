@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import { ipcRenderer } from 'electron';
 
 import ImageAddTabs from '@pkg/components/ImageAddTabs.vue';
 import ImagesFormAdd from '@pkg/components/ImagesFormAdd.vue';
 import ImagesOutputWindow from '@pkg/components/ImagesOutputWindow.vue';
 import getImageOutputCuller from '@pkg/utils/imageOutputCuller';
+import { ipcRenderer } from 'electron';
 
 export default {
   components: {

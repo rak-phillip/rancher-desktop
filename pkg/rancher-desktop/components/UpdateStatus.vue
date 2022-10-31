@@ -40,13 +40,12 @@
 </template>
 
 <script lang="ts">
+import { UpdateState } from '@pkg/main/update';
 import { Card, Checkbox } from '@rancher/components';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import Vue from 'vue';
 import Component from 'vue-class-component';
-
-import { UpdateState } from '@pkg/main/update';
 
 import type { PropType } from 'vue';
 

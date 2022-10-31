@@ -1,12 +1,11 @@
 import os from 'os';
 
-import _ from 'lodash';
-
 import { defaultSettings, Settings } from '@pkg/config/settings';
 import { CurrentNavItem, TransientSettings } from '@pkg/config/transientSettings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
 import { preferencesNavItems } from '@pkg/window/preferences';
+import _ from 'lodash';
 
 type settingsLike = Record<string, any>;
 

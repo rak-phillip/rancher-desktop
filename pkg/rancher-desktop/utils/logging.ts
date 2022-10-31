@@ -24,9 +24,8 @@ import path from 'path';
 import stream from 'stream';
 import util from 'util';
 
-import Electron from 'electron';
-
 import paths from '@pkg/utils/paths';
+import Electron from 'electron';
 
 type consoleKey = 'log' | 'error' | 'info' | 'warn';
 type logLevel = 'debug' | 'info';

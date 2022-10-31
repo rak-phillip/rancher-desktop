@@ -21,10 +21,10 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 
 import RdTabbed from '@pkg/components/Tabbed/RdTabbed.vue';
 import Tab from '@pkg/components/Tabbed/Tab.vue';
+import Vue from 'vue';
 
 export default Vue.extend({
   name: 'image-add-tabs',

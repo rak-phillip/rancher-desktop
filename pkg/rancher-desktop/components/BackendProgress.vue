@@ -19,11 +19,10 @@
 </template>
 
 <script lang="ts">
+import Progress from '@pkg/components/Progress.vue';
 import { ipcRenderer } from 'electron';
 import Vue from 'vue';
 import Component from 'vue-class-component';
-
-import Progress from '@pkg/components/Progress.vue';
 
 @Component({ components: { Progress } })
 class BackendProgress extends Vue {

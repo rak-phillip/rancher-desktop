@@ -1,10 +1,9 @@
 import path from 'path';
 import { URL } from 'url';
 
-import { app, ProtocolRequest, ProtocolResponse, protocol } from 'electron';
-
 import { isDevEnv } from '@pkg/utils/environment';
 import Latch from '@pkg/utils/latch';
+import { app, ProtocolRequest, ProtocolResponse, protocol } from 'electron';
 
 /**
  * Create a URL that consists of a base combined with the provided path

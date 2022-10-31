@@ -1,11 +1,10 @@
 <script lang="ts">
 import os from 'os';
 
-import Vue from 'vue';
-
 import SystemPreferences from '@pkg/components/SystemPreferences.vue';
 import { defaultSettings, Settings } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
+import Vue from 'vue';
 
 import type { PropType } from 'vue';
 

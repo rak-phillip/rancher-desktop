@@ -1,9 +1,8 @@
 <script lang="ts">
-import Vue from 'vue';
-import { mapState } from 'vuex';
-
 import DiagnosticsButtonRun from '@pkg/components/DiagnosticsButtonRun.vue';
 import ImagesButtonAdd from '@pkg/components/ImagesButtonAdd.vue';
+import Vue from 'vue';
+import { mapState } from 'vuex';
 
 export default Vue.extend({
   name:       'the-title',

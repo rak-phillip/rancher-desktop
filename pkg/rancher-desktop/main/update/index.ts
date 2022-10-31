@@ -6,6 +6,10 @@ import fs from 'fs';
 import os from 'os';
 import timers from 'timers';
 
+import { Settings } from '@pkg/config/settings';
+import mainEvent from '@pkg/main/mainEvents';
+import Logging from '@pkg/utils/logging';
+import * as window from '@pkg/window';
 import { CustomPublishOptions } from 'builder-util-runtime';
 import Electron from 'electron';
 import {
@@ -16,11 +20,6 @@ import { ElectronAppAdapter } from 'electron-updater/out/ElectronAppAdapter';
 import yaml from 'yaml';
 
 import LonghornProvider, { hasQueuedUpdate, LonghornUpdateInfo, setHasQueuedUpdate } from './LonghornProvider';
-
-import { Settings } from '@pkg/config/settings';
-import mainEvent from '@pkg/main/mainEvents';
-import Logging from '@pkg/utils/logging';
-import * as window from '@pkg/window';
 
 const console = Logging.update;
 

@@ -79,13 +79,13 @@
 </template>
 
 <script>
-import { Card, Checkbox } from '@rancher/components';
-import { ipcRenderer } from 'electron';
 
 import ImagesOutputWindow from '@pkg/components/ImagesOutputWindow.vue';
 import SortableTable from '@pkg/components/SortableTable';
 import getImageOutputCuller from '@pkg/utils/imageOutputCuller';
 import { parseSi } from '@pkg/utils/units';
+import { Card, Checkbox } from '@rancher/components';
+import { ipcRenderer } from 'electron';
 
 export default {
   components: {

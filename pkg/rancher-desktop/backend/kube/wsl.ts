@@ -3,13 +3,6 @@ import path from 'path';
 import timers from 'timers';
 import util from 'util';
 
-import semver from 'semver';
-
-import { KubeClient } from '../client';
-import { getImageProcessor } from '../images/imageFactory';
-import K3sHelper, { ExtraRequiresReasons, NoCachedK3sVersionsError, ShortVersion } from '../k3sHelper';
-import WSLBackend, { Action } from '../wsl';
-
 import INSTALL_K3S_SCRIPT from '@pkg/assets/scripts/install-k3s';
 import { BackendSettings, RestartReasons } from '@pkg/backend/backend';
 import * as K8s from '@pkg/backend/k8s';
@@ -19,6 +12,12 @@ import { checkConnectivity } from '@pkg/main/networking';
 import paths from '@pkg/utils/paths';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
 import { showMessageBox } from '@pkg/window';
+import semver from 'semver';
+
+import { KubeClient } from '../client';
+import { getImageProcessor } from '../images/imageFactory';
+import K3sHelper, { ExtraRequiresReasons, NoCachedK3sVersionsError, ShortVersion } from '../k3sHelper';
+import WSLBackend, { Action } from '../wsl';
 
 export default class WSLKubernetesBackend extends events.EventEmitter implements K8s.KubernetesBackend {
   constructor(vm: WSLBackend) {

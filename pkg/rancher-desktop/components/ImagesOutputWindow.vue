@@ -1,8 +1,7 @@
 <script>
+import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 import { Banner } from '@rancher/components';
 import { ipcRenderer } from 'electron';
-
-import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 
 export default {
   name: 'images-output-window',

@@ -61,16 +61,15 @@
 <script lang="ts">
 import os from 'os';
 
-import { Checkbox } from '@rancher/components';
-import { ipcRenderer } from 'electron';
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
-
 import { VersionEntry } from '@pkg/backend/k8s';
 import EngineSelector from '@pkg/components/EngineSelector.vue';
 import PathManagementSelector from '@pkg/components/PathManagementSelector.vue';
 import { Settings } from '@pkg/config/settings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
+import { Checkbox } from '@rancher/components';
+import { ipcRenderer } from 'electron';
+import Vue from 'vue';
+import { mapGetters } from 'vuex';
 
 export default Vue.extend({
   components: {

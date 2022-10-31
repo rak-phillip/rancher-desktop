@@ -1,8 +1,8 @@
+import { load as loadSettings } from '@pkg/config/settings';
 import { ipcRenderer } from 'electron';
 
 import { ActionContext, MutationsType } from './ts-helpers';
 
-import { load as loadSettings } from '@pkg/config/settings';
 import type { PathManagementStrategy } from '@pkg/integrations/pathManager';
 
 /**

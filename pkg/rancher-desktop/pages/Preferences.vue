@@ -1,19 +1,19 @@
 <script lang="ts">
 import os from 'os';
 
-import { ipcRenderer } from 'electron';
-import Vue from 'vue';
-import { mapGetters, mapState } from 'vuex';
-
 import EmptyState from '@pkg/components/EmptyState.vue';
 import PreferencesActions from '@pkg/components/Preferences/ModalActions.vue';
 import PreferencesBody from '@pkg/components/Preferences/ModalBody.vue';
 import PreferencesHeader from '@pkg/components/Preferences/ModalHeader.vue';
 import PreferencesNav from '@pkg/components/Preferences/ModalNav.vue';
-import type { TransientSettings } from '@pkg/config/transientSettings';
-import type { ServerState } from '@pkg/main/commandServer/httpCommandServer';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
 import { preferencesNavItems } from '@pkg/window/preferences';
+import { ipcRenderer } from 'electron';
+import Vue from 'vue';
+import { mapGetters, mapState } from 'vuex';
+
+import type { TransientSettings } from '@pkg/config/transientSettings';
+import type { ServerState } from '@pkg/main/commandServer/httpCommandServer';
 
 export default Vue.extend({
   name:       'preferences-modal',

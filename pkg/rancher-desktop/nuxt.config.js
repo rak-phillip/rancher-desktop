@@ -24,12 +24,6 @@ export default {
       webpackConfig.resolve.alias['./@'] = __dirname;
       webpackConfig.resolve.alias['./@pkg'] = __dirname;
 
-      console.log('NOT FAIL');
-      console.log('NOT FAIL');
-      console.log({ dirName: __dirname });
-      console.log('NOT FAIL');
-      console.log('NOT FAIL');
-
       // Add necessary loaders
       webpackConfig.module.rules.push({
         test:    /\.ya?ml(?:\?[a-z0-9=&.]+)?$/,

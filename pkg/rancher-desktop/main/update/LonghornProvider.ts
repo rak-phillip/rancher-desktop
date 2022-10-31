@@ -3,15 +3,14 @@ import os from 'os';
 import path from 'path';
 import { URL } from 'url';
 
+import fetch from '@pkg/utils/fetch';
+import Logging from '@pkg/utils/logging';
+import paths from '@pkg/utils/paths';
 import { newError, CustomPublishOptions } from 'builder-util-runtime';
 import Electron from 'electron';
 import { AppUpdater, Provider, ResolvedUpdateFileInfo, UpdateInfo } from 'electron-updater';
 import { ProviderRuntimeOptions, ProviderPlatform } from 'electron-updater/out/providers/Provider';
 import semver from 'semver';
-
-import fetch from '@pkg/utils/fetch';
-import Logging from '@pkg/utils/logging';
-import paths from '@pkg/utils/paths';
 
 const console = Logging.update;
 const gCachePath = path.join(paths.cache, 'updater-longhorn.json');
