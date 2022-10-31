@@ -1,12 +1,12 @@
 // eslint-disable-next-line import/no-named-as-default
 
-import en from '@pkg/assets/translations/en-us.yaml';
 import { LOCALE } from '@pkg/config/cookies';
 import { getProduct, getVendor } from '@pkg/config/private-label';
+import en from '@pkg/l10n/en-us.yaml';
 import { get } from '@pkg/utils/object';
 import IntlMessageFormat from 'intl-messageformat';
 
-const translationContext = require.context('@pkg/assets/translations', true, /.*/);
+const translationContext = require.context('@pkg/l10n', true, /.*/);
 
 const NONE = 'none';
 
