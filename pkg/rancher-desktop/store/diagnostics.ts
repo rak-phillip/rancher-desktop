@@ -1,5 +1,6 @@
 import { Settings } from '@pkg/config/settings';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 import _ from 'lodash';
 import { GetterTree } from 'vuex';
 
@@ -138,4 +139,20 @@ export const getters: GetterTree<DiagnosticsState, DiagnosticsState> = {
   timeLastRun(state: DiagnosticsState) {
     return state.timeLastRun;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'diagnostics' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

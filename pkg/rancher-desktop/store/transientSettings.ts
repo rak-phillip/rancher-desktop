@@ -1,5 +1,6 @@
 import { defaultTransientSettings, TransientSettings } from '@pkg/config/transientSettings';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 import _ from 'lodash';
 
 import { ActionContext, MutationsType } from './ts-helpers';
@@ -83,4 +84,20 @@ export const getters: GetterTree<TransientSettings, TransientSettings> = {
   getActiveTab(state: TransientSettings) {
     return state.preferences?.currentNavItem?.tab;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'transientSettings' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

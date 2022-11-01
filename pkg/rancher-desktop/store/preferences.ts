@@ -1,5 +1,6 @@
 import { defaultSettings, Settings } from '@pkg/config/settings';
 import { RecursiveKeys, RecursivePartial, RecursiveTypes } from '@pkg/utils/typeUtils';
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 import { ipcRenderer } from 'electron';
 import _ from 'lodash';
 
@@ -249,4 +250,20 @@ export const getters: GetterTree<PreferencesState, PreferencesState> = {
   showMuted(state: PreferencesState) {
     return state.preferences.diagnostics.showMuted;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'preferences' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

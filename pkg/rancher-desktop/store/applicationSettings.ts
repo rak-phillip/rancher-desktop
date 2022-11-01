@@ -1,4 +1,5 @@
 import { load as loadSettings } from '@pkg/config/settings';
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 import { ipcRenderer } from 'electron';
 
 import { ActionContext, MutationsType } from './ts-helpers';
@@ -63,4 +64,20 @@ export const getters = {
   sudoAllowed({ sudoAllowed }: State) {
     return sudoAllowed;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'applicationSettings' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

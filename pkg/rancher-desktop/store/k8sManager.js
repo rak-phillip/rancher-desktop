@@ -19,3 +19,19 @@ export const getters = {
     return k8sState;
   },
 };
+
+const pluginStoreFactory = () => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config = { namespace: 'k8sManager' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
+};
