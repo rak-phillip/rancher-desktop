@@ -58,7 +58,7 @@ c.build.extend = (config, { isClient, isDev }) => {
     }
   }
 
-  config.resolve.symlinks = false;
+  config.resolve.symlinks = true;
 
   // Ensure we process files in the @rancher/shell folder
   config.module.rules.forEach((r) => {
