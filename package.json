@@ -155,9 +155,6 @@
     "vue-template-compiler": "2.6.14",
     "webpack": "4.46.0"
   },
-  "optionalDependencies": {
-    "dmg-license": "1.0.11"
-  },
   "jest": {
     "transform": {
       "^.+\\.js$": "babel-jest",
