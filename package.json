@@ -93,6 +93,7 @@
     "vue-select": "3.20.0",
     "vue-shortkey": "3.1.7",
     "vue-slider-component": "3.2.20",
+    "vue-virtual-scroll-list": "^2.3.4",
     "which": "2.0.2",
     "xdg-app-paths": "5.5.1",
     "yaml": "2.1.3"
