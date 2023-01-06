@@ -1,3 +1,5 @@
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
+
 import { ActionContext, MutationsType } from './ts-helpers';
 
 interface PageState {
@@ -39,4 +41,20 @@ export const actions = {
 
     commit('SET_ACTION', action);
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters: {},
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'page' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

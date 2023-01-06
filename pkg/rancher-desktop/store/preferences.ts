@@ -1,3 +1,4 @@
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 import _ from 'lodash';
 
 import { ActionContext, MutationsType } from './ts-helpers';
@@ -259,4 +260,20 @@ export const getters: GetterTree<PreferencesState, PreferencesState> = {
   showMuted(state: PreferencesState) {
     return state.preferences.diagnostics.showMuted;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'preferences' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };

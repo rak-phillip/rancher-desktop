@@ -17,3 +17,19 @@ export const getters = {
     return imageManagerState;
   },
 };
+
+const pluginStoreFactory = () => {
+  return {
+    state,
+    getters,
+    mutations,
+    actions,
+  };
+};
+
+const config = { namespace: 'imageManager' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
+};

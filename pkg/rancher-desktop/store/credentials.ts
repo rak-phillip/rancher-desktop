@@ -1,3 +1,4 @@
+import { CoreStoreSpecifics, CoreStoreConfig } from '@shell/core/types';
 
 import { ActionContext, MutationsType } from './ts-helpers';
 
@@ -35,4 +36,20 @@ export const actions = {
 
     return result;
   },
+};
+
+const pluginStoreFactory = (): CoreStoreSpecifics => {
+  return {
+    state,
+    getters: { },
+    mutations,
+    actions,
+  };
+};
+
+const config: CoreStoreConfig = { namespace: 'credentials' };
+
+export default {
+  specifics: pluginStoreFactory(),
+  config,
 };
