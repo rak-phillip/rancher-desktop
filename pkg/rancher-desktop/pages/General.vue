@@ -1,6 +1,3 @@
-<router lang="yaml">
-  name: General
-</router>
 <template>
   <div>
     <div class="general">
@@ -44,6 +41,7 @@ export default {
   name:       'General',
   title:      'General',
   components: { TelemetryOptIn, UpdateStatus },
+  layout:     'plain',
   data() {
     return {
       settings:      defaultSettings,
@@ -62,6 +60,7 @@ export default {
   },
 
   mounted() {
+    console.log('STORE', { store: this.$store });
     this.$store.dispatch(
       'page/setHeader',
       {

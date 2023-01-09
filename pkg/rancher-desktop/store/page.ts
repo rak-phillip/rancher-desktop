@@ -8,13 +8,13 @@ interface PageState {
   action: string;
 }
 
-export const state: () => PageState = () => ({
+const state: () => PageState = () => ({
   title:       '',
   description: '',
   action:      '',
 });
 
-export const mutations: MutationsType<PageState> = {
+const mutations: MutationsType<PageState> = {
   SET_TITLE(state, title) {
     state.title = title;
   },
@@ -28,7 +28,7 @@ export const mutations: MutationsType<PageState> = {
 
 type PageActionContext = ActionContext<PageState>;
 
-export const actions = {
+const actions = {
   setHeader({ commit }: PageActionContext, args: { title: string, description?: string, action?: string }) {
     const { title, description, action } = args;
 
