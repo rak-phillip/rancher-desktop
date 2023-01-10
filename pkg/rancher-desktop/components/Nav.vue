@@ -1,8 +1,12 @@
 <template>
   <nav>
     <ul>
-      <li v-for="item in items" :key="item.route" :item="item.route">
-        <NuxtLink :to="item.route">
+      <li
+        v-for="item in items"
+        :key="item.route"
+        :item="item.route"
+      >
+        <nuxt-link :to="item.route">
           {{ routes[item.route].name }}
           <badge-state
             v-if="item.error"
@@ -10,7 +14,7 @@
             class="nav-badge"
             :label="item.error.toString()"
           />
-        </NuxtLink>
+        </nuxt-link>
       </li>
     </ul>
   </nav>

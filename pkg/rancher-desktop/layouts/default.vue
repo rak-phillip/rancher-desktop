@@ -1,10 +1,16 @@
 <template>
   <div class="wrapper">
-    <rd-header class="header" @open-preferences="openPreferences" />
-    <rd-nav class="nav" :items="routes" />
+    <rd-header
+      class="header"
+      @open-preferences="openPreferences"
+    />
+    <rd-nav
+      class="nav"
+      :items="routes"
+    />
     <the-title />
     <main class="body">
-      <Nuxt />
+      <nuxt-child />
     </main>
     <BackendProgress class="progress" />
     <!-- The ActionMenu is used by SortableTable for per-row actions. -->
@@ -32,6 +38,7 @@ export default {
     rdHeader: Header,
     TheTitle,
   },
+  layout: 'plain',
   async fetch() {
     await this.$store.dispatch('credentials/fetchCredentials');
     if (!this.credentials.port || !this.credentials.user || !this.credentials.password) {
@@ -55,11 +62,11 @@ export default {
   computed: {
     routes() {
       return [
-        { route: '/General' },
-        { route: '/PortForwarding' },
-        { route: '/Images' },
-        { route: '/Troubleshooting' },
-        { route: '/Diagnostics', error: this.errorCount },
+        { route: '/general' },
+        { route: '/port-forwarding' },
+        { route: '/images' },
+        { route: '/troubleshooting' },
+        { route: '/diagnostics', error: this.errorCount },
       ];
     },
     errorCount() {
