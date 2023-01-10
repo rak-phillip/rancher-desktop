@@ -15,25 +15,25 @@ const routes: RouteConfig[] = [
     children:  [
       {
         path:     '/',
-        redirect: { name: 'rancher-desktop-general' },
+        redirect: { name: 'General' },
       },
       {
-        name:      'rancher-desktop-general',
+        name:      'General',
         path:      '/general',
         component: General,
       },
       {
-        name:      'rancher-desktop-port-forwarding',
+        name:      'Port Forwarding',
         path:      '/port-forwarding',
         component: PortForwarding,
       },
       {
-        name:      'rancher-desktop-images',
+        name:      'Image',
         path:      '/images',
         component: Images,
       },
       {
-        name:      'rancher-desktop-troubleshooting',
+        name:      'Troubleshooting',
         path:      '/troubleshooting',
         component: Troubleshooting,
       },

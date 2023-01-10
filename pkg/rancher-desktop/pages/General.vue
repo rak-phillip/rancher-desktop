@@ -60,7 +60,6 @@ export default {
   },
 
   mounted() {
-    console.log('STORE', { store: this.$store });
     this.$store.dispatch(
       'page/setHeader',
       {

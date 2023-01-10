@@ -10,6 +10,6 @@ export function init(plugin, store) {
     removable:           false,
     showClusterSwitcher: false,
     category:            'global',
-    to:                  { name: 'rancher-desktop-general' },
+    to:                  { name: 'General' },
   });
 }
