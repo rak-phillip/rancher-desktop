@@ -8,6 +8,7 @@ import PortForwarding from '@pkg/pages/PortForwarding.vue';
 import Troubleshooting from '@pkg/pages/Troubleshooting.vue';
 import ImagesAdd from '@pkg/pages/images/add.vue';
 import ImagesList from '@pkg/pages/images/list.vue';
+import ImagesScans from '@pkg/pages/images/scans/_image-name.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -40,13 +41,18 @@ const routes: RouteConfig[] = [
           },
           {
             name:      'images-add',
-            path:      '/add',
+            path:      '/images/add',
             component: ImagesAdd,
           },
           {
             name:      'images-list',
             path:      '/list',
             component: ImagesList,
+          },
+          {
+            name:      'images-scans-image-name',
+            path:      'images/scans/:image-name',
+            component: ImagesScans,
           },
         ],
       },
