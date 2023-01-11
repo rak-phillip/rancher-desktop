@@ -7,6 +7,7 @@ import Images from '@pkg/pages/Images.vue';
 import PortForwarding from '@pkg/pages/PortForwarding.vue';
 import Troubleshooting from '@pkg/pages/Troubleshooting.vue';
 import ImagesAdd from '@pkg/pages/images/add.vue';
+import ImagesList from '@pkg/pages/images/list.vue';
 
 const routes: RouteConfig[] = [
   {
@@ -34,6 +35,10 @@ const routes: RouteConfig[] = [
         component: Images,
         children:  [
           {
+            path:     '/',
+            redirect: { name: 'images-list' },
+          },
+          {
             name:      'images-add',
             path:      '/add',
             component: ImagesAdd,
@@ -41,7 +46,7 @@ const routes: RouteConfig[] = [
           {
             name:      'images-list',
             path:      '/list',
-            component: ImagesAdd,
+            component: ImagesList,
           },
         ],
       },
