@@ -5,7 +5,7 @@ import routes from './router';
 // import applicationSettings from './store/applicationSettings';
 // import credentials from './store/credentials';
 // import diagnostics from './store/diagnostics';
-// import imageManager from './store/imageManager';
+import imageManager from './store/imageManager';
 import k8sManager from './store/k8sManager';
 import page from './store/page';
 // import preferences from './store/preferences';
@@ -27,7 +27,7 @@ export default function(plugin: IPlugin) {
   // plugin.addDashboardStore(preferences.config.namespace, preferences.specifics, preferences.config);
   // plugin.addDashboardStore(transientSettings.config.namespace, transientSettings.specifics, transientSettings.config);
   plugin.addDashboardStore(k8sManager.config.namespace, k8sManager.specifics, k8sManager.config);
-  // plugin.addDashboardStore(imageManager.config.namespace, imageManager.specifics, imageManager.config);
+  plugin.addDashboardStore(imageManager.config.namespace, imageManager.specifics, imageManager.config);
   // plugin.addDashboardStore(diagnostics.config.namespace, diagnostics.specifics, diagnostics.config);
   // plugin.addDashboardStore(credentials.config.namespace, credentials.specifics, credentials.config);
   // plugin.addDashboardStore(applicationSettings.config.namespace, applicationSettings.specifics, applicationSettings.config);

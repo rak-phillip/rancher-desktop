@@ -1,18 +1,18 @@
-export const state = () => ({ imageManagerState: false });
+const state = () => ({ imageManagerState: false });
 
-export const mutations = {
+const mutations = {
   SET_IMAGE_MANAGER_STATE(state, imageManagerState) {
     state.imageManagerState = imageManagerState;
   },
 };
 
-export const actions = {
+const actions = {
   setImageManagerState({ commit }, imageManagerState) {
     commit('SET_IMAGE_MANAGER_STATE', imageManagerState);
   },
 };
 
-export const getters = {
+const getters = {
   getImageManagerState({ imageManagerState }) {
     return imageManagerState;
   },
