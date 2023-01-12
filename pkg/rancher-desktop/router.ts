@@ -31,13 +31,13 @@ const routes: RouteConfig[] = [
         component: PortForwarding,
       },
       {
-        name:      'Images',
+        name:      'Images Home',
         path:      '/images',
         component: Images,
         children:  [
           {
             path:     '/',
-            redirect: { name: 'images-list' },
+            redirect: { name: 'Images' },
           },
           {
             name:      'images-add',
@@ -45,8 +45,8 @@ const routes: RouteConfig[] = [
             component: ImagesAdd,
           },
           {
-            name:      'images-list',
-            path:      '/list',
+            name:      'Images',
+            path:      '/images-list',
             component: ImagesList,
           },
           {

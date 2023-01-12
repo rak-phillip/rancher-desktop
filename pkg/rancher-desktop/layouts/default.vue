@@ -38,7 +38,7 @@ export default {
     rdHeader: Header,
     TheTitle,
   },
-  layout: 'plain',
+  layout: 'desktop',
   async fetch() {
     await this.$store.dispatch('credentials/fetchCredentials');
     if (!this.credentials.port || !this.credentials.user || !this.credentials.password) {
@@ -64,7 +64,7 @@ export default {
       return [
         { route: '/general' },
         { route: '/port-forwarding' },
-        { route: '/images' },
+        { route: '/images-list' },
         { route: '/troubleshooting' },
         { route: '/diagnostics', error: this.errorCount },
       ];
@@ -106,8 +106,8 @@ export default {
     "progress body"
     / var(--nav-width) 1fr;
   background-color: var(--body-bg);
-  width: 100vw;
-  height: 100vh;
+  width: 100vb;
+  height: 100%;
 
   .header {
     grid-area: header;
