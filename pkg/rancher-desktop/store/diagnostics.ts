@@ -28,7 +28,7 @@ const mapMutedDiagnostics = (checks: DiagnosticsResult[], mutedChecks: Record<st
   return checks.map(check => ({ ...check, mute: !!mutedChecks[check.id] }));
 };
 
-export const state: () => DiagnosticsState = () => (
+const state: () => DiagnosticsState = () => (
   {
     diagnostics: [],
     timeLastRun: new Date(),
@@ -36,7 +36,7 @@ export const state: () => DiagnosticsState = () => (
   }
 );
 
-export const mutations: MutationsType<DiagnosticsState> = {
+const mutations: MutationsType<DiagnosticsState> = {
   SET_DIAGNOSTICS(state: DiagnosticsState, diagnostics: DiagnosticsResult[]) {
     state.diagnostics = diagnostics.filter(result => !result.passed);
     state.inError = false;
@@ -51,7 +51,7 @@ export const mutations: MutationsType<DiagnosticsState> = {
 
 type DiagActionContext = ActionContext<DiagnosticsState>;
 
-export const actions = {
+const actions = {
   async fetchDiagnostics({ commit, rootState }: DiagActionContext, args: ServerState) {
     const {
       port,
@@ -132,7 +132,7 @@ export const actions = {
   },
 };
 
-export const getters: GetterTree<DiagnosticsState, DiagnosticsState> = {
+const getters: GetterTree<DiagnosticsState, DiagnosticsState> = {
   diagnostics(state: DiagnosticsState, getters) {
     return state.diagnostics;
   },

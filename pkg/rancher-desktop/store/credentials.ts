@@ -9,7 +9,7 @@ interface CredentialsState {
   credentials: ServerState;
 }
 
-export const state: () => CredentialsState = () => (
+const state: () => CredentialsState = () => (
   {
     credentials: {
       password: '',
@@ -20,7 +20,7 @@ export const state: () => CredentialsState = () => (
   }
 );
 
-export const mutations: MutationsType<CredentialsState> = {
+const mutations: MutationsType<CredentialsState> = {
   SET_CREDENTIALS(state, credentials) {
     state.credentials = credentials;
   },
@@ -28,7 +28,7 @@ export const mutations: MutationsType<CredentialsState> = {
 
 type CredActionContext = ActionContext<CredentialsState>;
 
-export const actions = {
+const actions = {
   async fetchCredentials({ commit }: CredActionContext): Promise<ServerState> {
     const result = await ipcRenderer.invoke('api-get-credentials');
 

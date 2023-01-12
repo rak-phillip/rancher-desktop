@@ -2,6 +2,7 @@
 
 import Vue from 'vue';
 
+import Help from '@pkg/components/Help.vue';
 import PreferencesBodyApplication from '@pkg/components/Preferences/BodyApplication.vue';
 import PreferencesBodyContainerEngine from '@pkg/components/Preferences/BodyContainerEngine.vue';
 import PreferencesBodyKubernetes from '@pkg/components/Preferences/BodyKubernetes.vue';

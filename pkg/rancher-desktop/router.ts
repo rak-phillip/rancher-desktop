@@ -2,9 +2,11 @@
 import { RouteConfig } from 'vue-router';
 
 import defaultLayout from '@pkg/layouts/default.vue';
+import Diagnostics from '@pkg/pages/Diagnostics.vue';
 import General from '@pkg/pages/General.vue';
 import Images from '@pkg/pages/Images.vue';
 import PortForwarding from '@pkg/pages/PortForwarding.vue';
+import Preferences from '@pkg/pages/Preferences.vue';
 import Troubleshooting from '@pkg/pages/Troubleshooting.vue';
 import ImagesAdd from '@pkg/pages/images/add.vue';
 import ImagesList from '@pkg/pages/images/list.vue';
@@ -57,9 +59,19 @@ const routes: RouteConfig[] = [
         ],
       },
       {
+        name:      'Diagnostics',
+        path:      '/diagnostics',
+        component: Diagnostics,
+      },
+      {
         name:      'Troubleshooting',
         path:      '/troubleshooting',
         component: Troubleshooting,
+      },
+      {
+        name:      'Preferences',
+        path:      '/preferences',
+        component: Preferences,
       },
     ],
   },

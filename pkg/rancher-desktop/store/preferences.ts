@@ -35,7 +35,7 @@ const uri = (port: number) => `http://localhost:${ port }/v0/settings`;
 
 const proposedSettings = (port: number) => `http://localhost:${ port }/v0/propose_settings`;
 
-export const state: () => PreferencesState = () => (
+const state: () => PreferencesState = () => (
   {
     initialPreferences: _.cloneDeep(defaultSettings),
     preferences:        _.cloneDeep(defaultSettings),
@@ -50,7 +50,7 @@ export const state: () => PreferencesState = () => (
   }
 );
 
-export const mutations: MutationsType<PreferencesState> = {
+const mutations: MutationsType<PreferencesState> = {
   SET_PREFERENCES(state, preferences) {
     state.preferences = preferences;
     state.canApply = false;
@@ -81,7 +81,7 @@ export const mutations: MutationsType<PreferencesState> = {
 type PrefActionContext = ActionContext<PreferencesState>;
 type ProposePreferencesPayload = { port: number, user: string, password: string, preferences?: Settings };
 
-export const actions = {
+const actions = {
   setPreferences({ commit }: PrefActionContext, preferences: Settings) {
     commit('SET_PREFERENCES', _.cloneDeep(preferences));
   },
@@ -234,7 +234,7 @@ export const actions = {
   },
 };
 
-export const getters: GetterTree<PreferencesState, PreferencesState> = {
+const getters: GetterTree<PreferencesState, PreferencesState> = {
   getPreferences(state: PreferencesState) {
     return state.preferences;
   },
