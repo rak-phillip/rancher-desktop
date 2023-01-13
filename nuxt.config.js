@@ -132,4 +132,6 @@ c.build.extend = (config, { isClient, isDev }) => {
    */
 };
 
+c.buildModules.push('~/modules/extension-layouts');
+
 export default c;

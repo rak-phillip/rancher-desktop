@@ -68,12 +68,12 @@ const routes: RouteConfig[] = [
         path:      '/troubleshooting',
         component: Troubleshooting,
       },
-      {
-        name:      'Preferences',
-        path:      '/preferences',
-        component: Preferences,
-      },
     ],
+  },
+  {
+    name:      'Preferences',
+    path:      '/preferences',
+    component: Preferences,
   },
 ];
 

@@ -31,7 +31,8 @@ let isDirty = false;
  * Open the main window; if it is already open, focus it.
  */
 export function openPreferences() {
-  const window = createWindow('preferences', `${ webRoot }/index.html#preferences`, {
+  const url = process.env.RD_ENV_PLUGINS_DEV ? 'https://localhost:8888/preferences' : `${ webRoot }/index.html#preferences`;
+  const window = createWindow('preferences', url, {
     title:           'Rancher Desktop - Preferences',
     width:           768,
     height:          512,

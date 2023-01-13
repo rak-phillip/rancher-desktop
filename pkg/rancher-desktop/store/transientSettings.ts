@@ -100,7 +100,7 @@ const pluginStoreFactory = (): CoreStoreSpecifics => {
 
 const config: CoreStoreConfig = { namespace: 'transientSettings' };
 
-export default {
+export const transientStore = {
   specifics: pluginStoreFactory(),
   config,
 };

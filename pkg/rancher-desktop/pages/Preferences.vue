@@ -20,7 +20,7 @@ export default Vue.extend({
   components: {
     PreferencesHeader, PreferencesNav, PreferencesBody, PreferencesFooter, EmptyState,
   },
-  layout: 'preferences',
+  layout: 'blank',
   data() {
     return { preferencesLoaded: false };
   },
@@ -48,6 +48,9 @@ export default Vue.extend({
   },
   beforeMount() {
     window.addEventListener('keydown', this.handleKeypress, true);
+  },
+  mounted() {
+    ipcRenderer.send('preferences/load');
   },
   beforeDestroy() {
     window.removeEventListener('keydown', this.handleKeypress, true);
