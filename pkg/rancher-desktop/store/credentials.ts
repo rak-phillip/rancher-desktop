@@ -9,7 +9,7 @@ interface CredentialsState {
   credentials: ServerState;
 }
 
-const state: () => CredentialsState = () => (
+export const state: () => CredentialsState = () => (
   {
     credentials: {
       password: '',
@@ -20,7 +20,7 @@ const state: () => CredentialsState = () => (
   }
 );
 
-const mutations: MutationsType<CredentialsState> = {
+export const mutations: MutationsType<CredentialsState> = {
   SET_CREDENTIALS(state, credentials) {
     state.credentials = credentials;
   },
@@ -38,7 +38,7 @@ const actions = {
   },
 };
 
-const pluginStoreFactory = (): CoreStoreSpecifics => {
+export const pluginStoreFactory = (): CoreStoreSpecifics => {
   return {
     state,
     getters: { },
@@ -49,7 +49,7 @@ const pluginStoreFactory = (): CoreStoreSpecifics => {
 
 const config: CoreStoreConfig = { namespace: 'credentials' };
 
-export default {
+export const credentialsStore = {
   specifics: pluginStoreFactory(),
   config,
 };

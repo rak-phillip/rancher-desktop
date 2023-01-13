@@ -1,18 +1,18 @@
-const state = () => ({ imageManagerState: false });
+export const state = () => ({ imageManagerState: false });
 
-const mutations = {
+export const mutations = {
   SET_IMAGE_MANAGER_STATE(state, imageManagerState) {
     state.imageManagerState = imageManagerState;
   },
 };
 
-const actions = {
+export const actions = {
   setImageManagerState({ commit }, imageManagerState) {
     commit('SET_IMAGE_MANAGER_STATE', imageManagerState);
   },
 };
 
-const getters = {
+export const getters = {
   getImageManagerState({ imageManagerState }) {
     return imageManagerState;
   },
@@ -29,7 +29,7 @@ const pluginStoreFactory = () => {
 
 const config = { namespace: 'imageManager' };
 
-export default {
+export const imageManagerStore = {
   specifics: pluginStoreFactory(),
   config,
 };

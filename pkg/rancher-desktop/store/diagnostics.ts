@@ -28,7 +28,7 @@ const mapMutedDiagnostics = (checks: DiagnosticsResult[], mutedChecks: Record<st
   return checks.map(check => ({ ...check, mute: !!mutedChecks[check.id] }));
 };
 
-const state: () => DiagnosticsState = () => (
+export const state: () => DiagnosticsState = () => (
   {
     diagnostics: [],
     timeLastRun: new Date(),
@@ -36,7 +36,7 @@ const state: () => DiagnosticsState = () => (
   }
 );
 
-const mutations: MutationsType<DiagnosticsState> = {
+export const mutations: MutationsType<DiagnosticsState> = {
   SET_DIAGNOSTICS(state: DiagnosticsState, diagnostics: DiagnosticsResult[]) {
     state.diagnostics = diagnostics.filter(result => !result.passed);
     state.inError = false;
@@ -51,7 +51,7 @@ const mutations: MutationsType<DiagnosticsState> = {
 
 type DiagActionContext = ActionContext<DiagnosticsState>;
 
-const actions = {
+export const actions = {
   async fetchDiagnostics({ commit, rootState }: DiagActionContext, args: ServerState) {
     const {
       port,
@@ -132,7 +132,7 @@ const actions = {
   },
 };
 
-const getters: GetterTree<DiagnosticsState, DiagnosticsState> = {
+export const getters: GetterTree<DiagnosticsState, DiagnosticsState> = {
   diagnostics(state: DiagnosticsState, getters) {
     return state.diagnostics;
   },
@@ -152,7 +152,7 @@ const pluginStoreFactory = (): CoreStoreSpecifics => {
 
 const config: CoreStoreConfig = { namespace: 'diagnostics' };
 
-export default {
+export const diagnosticsStore = {
   specifics: pluginStoreFactory(),
   config,
 };

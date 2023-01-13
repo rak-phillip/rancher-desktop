@@ -8,13 +8,13 @@ interface PageState {
   action: string;
 }
 
-const state: () => PageState = () => ({
+export const state: () => PageState = () => ({
   title:       '',
   description: '',
   action:      '',
 });
 
-const mutations: MutationsType<PageState> = {
+export const mutations: MutationsType<PageState> = {
   SET_TITLE(state, title) {
     state.title = title;
   },
@@ -28,7 +28,7 @@ const mutations: MutationsType<PageState> = {
 
 type PageActionContext = ActionContext<PageState>;
 
-const actions = {
+export const actions = {
   setHeader({ commit }: PageActionContext, args: { title: string, description?: string, action?: string }) {
     const { title, description, action } = args;
 
@@ -54,7 +54,7 @@ const pluginStoreFactory = (): CoreStoreSpecifics => {
 
 const config: CoreStoreConfig = { namespace: 'page' };
 
-export default {
+export const pageStore = {
   specifics: pluginStoreFactory(),
   config,
 };

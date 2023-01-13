@@ -35,7 +35,7 @@ const uri = (port: number) => `http://localhost:${ port }/v0/settings`;
 
 const proposedSettings = (port: number) => `http://localhost:${ port }/v0/propose_settings`;
 
-const state: () => PreferencesState = () => (
+export const state: () => PreferencesState = () => (
   {
     initialPreferences: _.cloneDeep(defaultSettings),
     preferences:        _.cloneDeep(defaultSettings),
@@ -50,7 +50,7 @@ const state: () => PreferencesState = () => (
   }
 );
 
-const mutations: MutationsType<PreferencesState> = {
+export const mutations: MutationsType<PreferencesState> = {
   SET_PREFERENCES(state, preferences) {
     state.preferences = preferences;
     state.canApply = false;
@@ -81,7 +81,7 @@ const mutations: MutationsType<PreferencesState> = {
 type PrefActionContext = ActionContext<PreferencesState>;
 type ProposePreferencesPayload = { port: number, user: string, password: string, preferences?: Settings };
 
-const actions = {
+export const actions = {
   setPreferences({ commit }: PrefActionContext, preferences: Settings) {
     commit('SET_PREFERENCES', _.cloneDeep(preferences));
   },
@@ -234,7 +234,7 @@ const actions = {
   },
 };
 
-const getters: GetterTree<PreferencesState, PreferencesState> = {
+export const getters: GetterTree<PreferencesState, PreferencesState> = {
   getPreferences(state: PreferencesState) {
     return state.preferences;
   },
@@ -273,7 +273,7 @@ const pluginStoreFactory = (): CoreStoreSpecifics => {
 
 const config: CoreStoreConfig = { namespace: 'preferences' };
 
-export default {
+export const preferencesStore = {
   specifics: pluginStoreFactory(),
   config,
 };
