@@ -168,11 +168,14 @@ function resizeWindow(window: Electron.BrowserWindow, width: number, height: num
  */
 export function openDialog(id: string, opts?: Electron.BrowserWindowConstructorOptions) {
   console.debug('openDialog() id: ', id);
+  // We use hash mode for the router, so `index.html#FirstRun` loads
+  // pkg/rancher-desktop/pages/FirstRun.vue.
+  const url = process.env.RD_ENV_PLUGINS_DEV ? `https://localhost:8888/${ id }` : `${ webRoot }/index.html#${ id }`;
+
+  console.log('URL', { url });
   const window = createWindow(
     id,
-    // We use hash mode for the router, so `index.html#FirstRun` loads
-    // pkg/rancher-desktop/pages/FirstRun.vue.
-    `${ webRoot }/index.html#${ id }`,
+    url,
     {
       width:           100,
       height:          100,

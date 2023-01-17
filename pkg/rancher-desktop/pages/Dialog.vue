@@ -4,12 +4,13 @@ import os from 'os';
 import { Checkbox } from '@rancher/components';
 import Vue from 'vue';
 
+import DialogBase from '@pkg/pages/DialogBase.vue';
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
 
 export default Vue.extend({
   name:       'rd-dialog',
-  components: { Checkbox },
-  layout:     'dialog',
+  components: { Checkbox, DialogBase },
+  layout:     'blank',
   data() {
     return {
       message:         '',
@@ -56,49 +57,58 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="dialog-container">
-    <div v-if="message" class="message">
-      <slot name="message">
-        {{ message }}
-      </slot>
+  <dialog-base>
+    <div class="body dialog-container">
+      <div v-if="message" class="message">
+        <slot name="message">
+          {{ message }}
+        </slot>
+      </div>
+      <div v-if="detail" class="detail">
+        <slot name="detail">
+          <span class="detail-span" v-html="detail" />
+        </slot>
+      </div>
+      <div v-if="checkboxLabel" class="checkbox">
+        <slot name="checkbox">
+          <checkbox v-model="checkboxChecked" :label="checkboxLabel" />
+        </slot>
+      </div>
+      <div
+        class="actions"
+        :class="{ 'actions-reverse': isDarwin() }"
+      >
+        <slot name="actions">
+          <template v-if="!buttons.length">
+            <button class="btn role-primary">
+              OK
+            </button>
+          </template>
+          <template v-else>
+            <button
+              v-for="(buttonText, index) in buttons"
+              :key="index"
+              class="btn"
+              :class="index === 0 ? 'role-primary' : 'role-secondary'"
+              @click="close(index)"
+            >
+              {{ buttonText }}
+            </button>
+          </template>
+        </slot>
+      </div>
     </div>
-    <div v-if="detail" class="detail">
-      <slot name="detail">
-        <span class="detail-span" v-html="detail" />
-      </slot>
-    </div>
-    <div v-if="checkboxLabel" class="checkbox">
-      <slot name="checkbox">
-        <checkbox v-model="checkboxChecked" :label="checkboxLabel" />
-      </slot>
-    </div>
-    <div
-      class="actions"
-      :class="{ 'actions-reverse': isDarwin() }"
-    >
-      <slot name="actions">
-        <template v-if="!buttons.length">
-          <button class="btn role-primary">
-            OK
-          </button>
-        </template>
-        <template v-else>
-          <button
-            v-for="(buttonText, index) in buttons"
-            :key="index"
-            class="btn"
-            :class="index === 0 ? 'role-primary' : 'role-secondary'"
-            @click="close(index)"
-          >
-            {{ buttonText }}
-          </button>
-        </template>
-      </slot>
-    </div>
-  </div>
+  </dialog-base>
 </template>
 
 <style lang="scss" scoped>
+  .body {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    gap: 1rem;
+  }
+
   .dialog-container {
     display: flex;
     width: 32rem;
