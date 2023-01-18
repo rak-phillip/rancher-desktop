@@ -1,9 +1,11 @@
 declare module '@shell/core/types' {
   class IPlugin {
+    name: any;
     metadata: any;
     addProduct: any;
     addRoutes: any;
     addDashboardStore: any;
+    DSL: any;
   }
 
   export type VuexStoreObject = { [key: string]: any };
