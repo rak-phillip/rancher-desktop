@@ -32,7 +32,7 @@ const routes: RouteConfig[] = [
       },
       {
         name:      'General',
-        path:      '/general',
+        path:      '/rancher-desktop/general',
         component: General,
       },
       {

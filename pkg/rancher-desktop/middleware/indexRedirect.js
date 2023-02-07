@@ -1,5 +1,5 @@
 /**
- * This middleware redirects / to /General
+ * This middleware redirects / to /general
  */
 export default ({ route, next, redirect }) => {
   switch (route.path) {
@@ -7,7 +7,7 @@ export default ({ route, next, redirect }) => {
     next();
     break;
   case '/':
-    redirect(301, '/General');
+    redirect(301, '/rancher-desktop/general');
     break;
   default:
     next();

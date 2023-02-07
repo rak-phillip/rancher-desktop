@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <dialog-base>
     <h2>
       Cannot run as Root
     </h2>
@@ -16,16 +16,18 @@
         OK
       </button>
     </div>
-  </div>
+  </dialog-base>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
+import DialogBase from '@pkg/pages/DialogBase.vue';
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
 
 export default Vue.extend({
-  layout: 'dialog',
+  components: { DialogBase },
+  layout:     'blank',
   mounted() {
     ipcRenderer.send('dialog/ready');
   },

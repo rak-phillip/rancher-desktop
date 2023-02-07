@@ -67,7 +67,7 @@ class DevRunner extends events.EventEmitter {
       };
     }
 
-    return { home: 'http://localhost:8888/pages/General' };
+    return { home: 'http://localhost:8888/pages/rancher-desktop/general' };
   }
 
   #mainProcess: childProcess.ChildProcess | null = null;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <dialog-base>
     <h2 data-test="k8s-settings-header">
       Welcome to Rancher Desktop
     </h2>
@@ -55,7 +55,7 @@
         Accept
       </button>
     </div>
-  </div>
+  </dialog-base>
 </template>
 
 <script lang="ts">
@@ -70,13 +70,14 @@ import EngineSelector from '@pkg/components/EngineSelector.vue';
 import PathManagementSelector from '@pkg/components/PathManagementSelector.vue';
 import type { Settings, ContainerEngine } from '@pkg/config/settings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
+import DialogBase from '@pkg/pages/DialogBase.vue';
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
 
 export default Vue.extend({
   components: {
-    Checkbox, EngineSelector, PathManagementSelector,
+    Checkbox, EngineSelector, PathManagementSelector, DialogBase,
   },
-  layout: 'dialog',
+  layout: 'blank',
   data() {
     return {
       settings: { kubernetes: {} } as Settings,

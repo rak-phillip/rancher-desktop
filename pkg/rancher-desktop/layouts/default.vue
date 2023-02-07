@@ -62,7 +62,7 @@ export default {
   computed: {
     routes() {
       return [
-        { route: '/general' },
+        { route: '/rancher-desktop/general' },
         { route: '/port-forwarding' },
         { route: '/images-list' },
         { route: '/troubleshooting' },
@@ -83,7 +83,8 @@ export default {
   },
 
   beforeDestroy() {
-    ipcRenderer.off('k8s-check-state');
+    console.log('NOT FAIL - RANCHER DESKTOP', { routes: this.$router });
+    // ipcRenderer.off('k8s-check-state');
   },
 
   methods: {

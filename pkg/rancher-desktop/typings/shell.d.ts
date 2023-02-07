@@ -5,6 +5,7 @@ declare module '@shell/core/types' {
     addProduct: any;
     addRoutes: any;
     addDashboardStore: any;
+    addStore: any;
     DSL: any;
   }
 
