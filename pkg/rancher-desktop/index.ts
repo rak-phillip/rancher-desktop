@@ -5,7 +5,6 @@ import routes from './router';
 // import applicationSettings from './store/applicationSettings';
 import { credentialsStore } from './store/credentials';
 import { diagnosticsStore } from './store/diagnostics';
-import { helpStore } from './store/help';
 import { imageManagerStore } from './store/imageManager';
 import { k8sManagerStore } from './store/k8sManager';
 import { pageStore } from './store/page';
@@ -31,7 +30,6 @@ export default function(plugin: IPlugin) {
   plugin.addDashboardStore(imageManagerStore.config.namespace, imageManagerStore.specifics, imageManagerStore.config);
   plugin.addDashboardStore(diagnosticsStore.config.namespace, diagnosticsStore.specifics, diagnosticsStore.config);
   plugin.addDashboardStore(credentialsStore.config.namespace, credentialsStore.specifics, credentialsStore.config);
-  plugin.addDashboardStore(helpStore.config.namespace, helpStore.specifics, helpStore.config);
   // plugin.addDashboardStore(applicationSettings.config.namespace, applicationSettings.specifics, applicationSettings.config);
 
   plugin.addRoutes(routes);
