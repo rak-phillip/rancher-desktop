@@ -22,7 +22,6 @@ import ImagesScans from '@pkg/pages/images/scans/_image-name.vue';
 
 const routes: RouteConfig[] = [
   {
-    name:      'rancher-desktop',
     path:      '/rancher-desktop',
     component: defaultLayout,
     children:  [
@@ -41,7 +40,6 @@ const routes: RouteConfig[] = [
         component: PortForwarding,
       },
       {
-        name:      'Images Home',
         path:      '/images',
         component: Images,
         children:  [

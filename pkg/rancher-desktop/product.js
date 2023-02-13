@@ -6,10 +6,16 @@ export function init(plugin, store) {
   store.dispatch(
     'setIsSingleProduct',
     {
-      afterLoginRoute:     { name: 'General', params: {} },
+      afterLoginRoute: {
+        name:   'General',
+        params: { product: 'rancher-desktop' },
+      },
+      logoRoute: {
+        name:   'General',
+        params: { product: 'rancher-desktop' },
+      },
       logo:                require(`./assets/images/logo.svg`),
       productNameKey:      'app.name',
-      logoRoute:           { name: 'General', params: {} },
       disableSteveSockets: true,
     },
   );
@@ -21,6 +27,9 @@ export function init(plugin, store) {
     removable:           false,
     showClusterSwitcher: false,
     category:            'global',
-    to:                  { name: 'General' },
+    to:                  {
+      name:   'General',
+      params: { product: 'rancher-desktop' },
+    },
   });
 }
