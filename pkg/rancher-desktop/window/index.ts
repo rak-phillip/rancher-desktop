@@ -330,6 +330,7 @@ function extensionGetContentAreaListener(_event: Electron.IpcMainEvent, args: an
 
   if (!view) {
     try {
+      (view as any).destroy();
       createView();
       window.webContents.on('before-input-event', extensionZoomListener);
     } catch (e) {
