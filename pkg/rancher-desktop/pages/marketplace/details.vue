@@ -228,38 +228,14 @@ export default {
       this.response = null;
     },
 
-    appInstallation(action) {
+    async appInstallation(action) {
       this.resetBanners();
 
-      fetch(
-        `http://localhost:${ this.credentials?.port }/v1/extensions/${ action }?id=${ this.versionedExtension }`,
-        {
-          method:  'POST',
-          headers: new Headers({
-            Authorization: `Basic ${ window.btoa(
-              `${ this.credentials?.user }:${ this.credentials?.password }`,
-            ) }`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-          }),
-        },
-      ).then((r) => {
-        if (!r.ok) {
-          this.error = r.statusText;
-          this.loading = false;
-        }
+      const result = await this.$store.dispatch('extensions/manageExtension', { action, extension: this.versionedExtension });
 
-        if (r.status === 201) {
-          this.response = this.t(`marketplace.banners.${ action }`, { name: this.extensionDetails.name });
-
-          this.loading = false;
-
-          if (action === 'uninstall') {
-            this.$store.dispatch('extensions/setIsInstalled', { isInstalled: false });
-          } else {
-            this.$store.dispatch('extensions/setIsInstalled', { isInstalled: true });
-          }
-        }
-      });
+      this.error = result.error;
+      this.loading = result.loading;
+      this.response = this.t(`marketplace.banners.${ action }`, { name: this.extensionDetails.name });
     },
 
     formatDate(dateString) {
