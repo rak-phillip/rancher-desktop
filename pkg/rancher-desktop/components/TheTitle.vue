@@ -2,17 +2,14 @@
 import Vue from 'vue';
 import { mapState } from 'vuex';
 
-import DiagnosticsButtonRun from '@pkg/components/DiagnosticsButtonRun.vue';
-import ImagesButtonAdd from '@pkg/components/ImagesButtonAdd.vue';
+const componentCache: { [key: string]: any } = {};
 
 export default Vue.extend({
-  name:       'the-title',
-  components: { ImagesButtonAdd, DiagnosticsButtonRun },
+  name: 'the-title',
   data() {
     return {
-      data() {
-        return { isChild: false };
-      },
+      isChild:          false,
+      dynamicComponent: null,
     };
   },
   computed: {
@@ -30,6 +27,23 @@ export default Vue.extend({
       handler(current) {
         this.isChild = current.path.lastIndexOf('/') > 0;
       },
+    },
+    action: {
+      handler(current) {
+        if (!current) {
+          return;
+        }
+
+        if (componentCache[current]) {
+          this.dynamicComponent = componentCache[current];
+        } else {
+          import(`@pkg/components/${ current }.vue`).then((component) => {
+            componentCache[current] = component.default;
+            this.dynamicComponent = componentCache[current];
+          });
+        }
+      },
+      immediate: true,
     },
   },
   methods: {
@@ -76,7 +90,7 @@ export default Vue.extend({
           key="actions"
           class="actions fade-actions"
         >
-          <component :is="action" />
+          <component :is="dynamicComponent" />
         </div>
       </transition>
     </div>
