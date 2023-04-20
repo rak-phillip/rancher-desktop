@@ -1,18 +1,21 @@
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { VueConstructor } from 'vue';
+import { mapState } from 'vuex';
 
 import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 
-export default Vue.extend({
+interface VuexBindings {
+  isInstalled: boolean;
+}
+
+export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
   name:       'extension-details-button-install',
   components: { LoadingIndicator },
   data() {
-    return {
-      loading:     false,
-      isInstalled: null,
-    };
+    return { loading: false };
   },
   computed: {
+    ...mapState('extensions', ['isInstalled']),
     installationAction(): string {
       return this.isInstalled ? 'uninstall' : 'install';
     },

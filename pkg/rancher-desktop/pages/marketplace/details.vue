@@ -89,6 +89,7 @@
 <script>
 import { Banner } from '@rancher/components';
 import dayjs from 'dayjs';
+import { mapState } from 'vuex';
 
 import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 import demoMetadata from '@pkg/utils/_demo_metadata.js';
@@ -103,7 +104,6 @@ export default {
       metadata:         null,
       image:            this.$route.params.image,
       loading:          false,
-      isInstalled:      null,
       error:            null,
       response:         null,
       credentials:      null,
@@ -128,12 +128,15 @@ export default {
       }
 
       response.json().then((res) => {
-        this.isInstalled = Object.keys(res).includes(this.versionedExtension);
+        const isInstalled = Object.keys(res).includes(this.versionedExtension);
+
+        this.$store.dispatch('extensions/setIsInstalled', { isInstalled });
       });
     });
   },
 
   computed: {
+    ...mapState('extensions', ['isInstalled']),
     buttonLabel() {
       if (this.loading) {
         return this.isInstalled ? this.t('marketplace.sidebar.uninstallButton.loading') : this.t('marketplace.sidebar.installButton.loading');
@@ -194,6 +197,7 @@ export default {
       title:
         this.metadata?.LatestVersion.Labels['org.opencontainers.image.title'] ||
         this.extensionWithoutVersion,
+      action: 'ExtensionDetailsButtonInstall',
     });
 
     this.extensionDetails = {
@@ -250,9 +254,9 @@ export default {
           this.loading = false;
 
           if (action === 'uninstall') {
-            this.isInstalled = false;
+            this.$store.dispatch('extensions/setIsInstalled', { isInstalled: false });
           } else {
-            this.isInstalled = true;
+            this.$store.dispatch('extensions/setIsInstalled', { isInstalled: true });
           }
         }
       });
