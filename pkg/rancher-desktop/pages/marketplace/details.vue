@@ -219,6 +219,8 @@ export default {
       categories: this.metadata?.Categories || [],
       lastUpdate: this.metadata?.UpdatedAt || [],
     };
+
+    this.$store.dispatch('extensions/setExtension', { extension: this.versionedExtension });
   },
 
   methods: {

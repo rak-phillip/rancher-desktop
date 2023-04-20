@@ -8,15 +8,22 @@ type Credentials = Omit<ServerState, 'pid'>;
 
 interface ExtensionsState {
   isInstalled: boolean;
+  extension: string;
 }
 
 export const state: () => ExtensionsState = () => (
-  { isInstalled: false }
+  {
+    isInstalled: false,
+    extension:   '',
+  }
 );
 
 export const mutations: MutationsType<ExtensionsState> = {
   SET_IS_INSTALLED(state, isInstalled) {
     state.isInstalled = isInstalled;
+  },
+  SET_EXTENSION(state, extension) {
+    state.extension = extension;
   },
 };
 
@@ -26,10 +33,13 @@ export const actions = {
   setIsInstalled({ commit }: ExtensionActionContext, { isInstalled }: { isInstalled: boolean }) {
     commit('SET_IS_INSTALLED', isInstalled);
   },
-  async manageExtension({ dispatch, rootState }: ExtensionActionContext, { action, extension }: { action: string, extension: string }) {
+  setExtension({ commit }: ExtensionActionContext, { extension }: { extension: string }) {
+    commit('SET_EXTENSION', extension);
+  },
+  async manageExtension({ dispatch, rootState, state }: ExtensionActionContext, { action }: { action: string }) {
     const credentials = rootState.credentials.credentials as Credentials;
     const result = await fetch(
-      `http://localhost:${ credentials?.port }/v1/extensions/${ action }?id=${ extension }`,
+      `http://localhost:${ credentials?.port }/v1/extensions/${ action }?id=${ state.extension }`,
       {
         method:  'POST',
         headers: new Headers({

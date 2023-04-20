@@ -15,7 +15,7 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     return { loading: false };
   },
   computed: {
-    ...mapState('extensions', ['isInstalled']),
+    ...mapState('extensions', ['isInstalled', 'extension']),
     installationAction(): string {
       return this.isInstalled ? 'uninstall' : 'install';
     },
@@ -27,6 +27,16 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
       }
     },
   },
+  methods: {
+    async appInstallation() {
+      this.loading = true;
+      const result = await this.$store.dispatch(
+        'extensions/manageExtension',
+        { action: this.installationAction });
+
+      this.loading = result.loading;
+    },
+  },
 });
 </script>
 
@@ -35,7 +45,7 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     data-test="button-install"
     class="btn btn-xs role-primary"
     :disabled="loading"
-    @click="appInstallation(installationAction)"
+    @click="appInstallation"
   >
     <span v-if="loading" name="loading" :is-loading="loading">
       <loading-indicator>{{ buttonLabel }}</loading-indicator>
