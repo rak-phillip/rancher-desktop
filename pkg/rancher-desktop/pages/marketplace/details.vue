@@ -14,19 +14,6 @@
         <img :src="getPreviewImage" alt="" />
       </div>
       <div class="extension-content-sidebar">
-        <button
-          data-test="button-install"
-          :class="['btn', 'btn-xs', 'role-primary']"
-          :disabled="loading"
-          @click="appInstallation(installationAction)"
-        >
-          <span v-if="loading" name="loading" :is-loading="loading">
-            <loading-indicator>{{ buttonLabel }}</loading-indicator>
-          </span>
-
-          <span v-if="!loading">{{ buttonLabel }}</span>
-        </button>
-
         <div v-if="extensionDetails" class="extension-content-sidebar-version">
           <div class="extension-content-sidebar-version-header">
             <img :src="extensionDetails.icon" alt="" />
@@ -91,12 +78,11 @@ import { Banner } from '@rancher/components';
 import dayjs from 'dayjs';
 import { mapState } from 'vuex';
 
-import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 import demoMetadata from '@pkg/utils/_demo_metadata.js';
 
 export default {
   name:       'marketplace-details',
-  components: { LoadingIndicator, Banner },
+  components: { Banner },
   data() {
     return {
       extension:        this.$route.params.slug,
@@ -133,14 +119,7 @@ export default {
   },
 
   computed: {
-    ...mapState('extensions', ['isInstalled', 'error', 'loading', 'response']),
-    buttonLabel() {
-      if (this.loading) {
-        return this.isInstalled ? this.t('marketplace.sidebar.uninstallButton.loading') : this.t('marketplace.sidebar.installButton.loading');
-      } else {
-        return this.isInstalled ? this.t('marketplace.sidebar.uninstallButton.label') : this.t('marketplace.sidebar.installButton.label');
-      }
-    },
+    ...mapState('extensions', ['isInstalled', 'error', 'response']),
     installationAction() {
       return this.isInstalled ? 'uninstall' : 'install';
     },
