@@ -103,9 +103,6 @@ export default {
       extensionDetails: null,
       metadata:         null,
       image:            this.$route.params.image,
-      loading:          false,
-      error:            null,
-      response:         null,
       credentials:      null,
     };
   },
@@ -136,7 +133,7 @@ export default {
   },
 
   computed: {
-    ...mapState('extensions', ['isInstalled']),
+    ...mapState('extensions', ['isInstalled', 'error', 'loading', 'response']),
     buttonLabel() {
       if (this.loading) {
         return this.isInstalled ? this.t('marketplace.sidebar.uninstallButton.loading') : this.t('marketplace.sidebar.installButton.loading');
@@ -220,26 +217,15 @@ export default {
       lastUpdate: this.metadata?.UpdatedAt || [],
     };
 
-    this.$store.dispatch('extensions/setExtension', { extension: this.versionedExtension });
+    this.$store.dispatch(
+      'extensions/setExtension',
+      {
+        extension: this.versionedExtension,
+        name:      this.extensionDetails.name,
+      });
   },
 
   methods: {
-    resetBanners() {
-      this.loading = true;
-      this.error = null;
-      this.response = null;
-    },
-
-    async appInstallation(action) {
-      this.resetBanners();
-
-      const result = await this.$store.dispatch('extensions/manageExtension', { action, extension: this.versionedExtension });
-
-      this.error = result.error;
-      this.loading = result.loading;
-      this.response = this.t(`marketplace.banners.${ action }`, { name: this.extensionDetails.name });
-    },
-
     formatDate(dateString) {
       const date = dayjs(dateString);
 

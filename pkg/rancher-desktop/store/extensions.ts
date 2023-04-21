@@ -9,12 +9,20 @@ type Credentials = Omit<ServerState, 'pid'>;
 interface ExtensionsState {
   isInstalled: boolean;
   extension: string;
+  name: string;
+  loading: boolean;
+  error: string;
+  response: string;
 }
 
 export const state: () => ExtensionsState = () => (
   {
     isInstalled: false,
     extension:   '',
+    name:        '',
+    loading:     false,
+    error:       '',
+    response:    '',
   }
 );
 
@@ -25,6 +33,18 @@ export const mutations: MutationsType<ExtensionsState> = {
   SET_EXTENSION(state, extension) {
     state.extension = extension;
   },
+  SET_NAME(state, name) {
+    state.name = name;
+  },
+  SET_LOADING(state, isLoading) {
+    state.loading = isLoading;
+  },
+  SET_ERROR(state, error) {
+    state.error = error;
+  },
+  SET_RESPONSE(state, response) {
+    state.response = response;
+  },
 };
 
 type ExtensionActionContext = ActionContext<ExtensionsState>;
@@ -33,10 +53,20 @@ export const actions = {
   setIsInstalled({ commit }: ExtensionActionContext, { isInstalled }: { isInstalled: boolean }) {
     commit('SET_IS_INSTALLED', isInstalled);
   },
-  setExtension({ commit }: ExtensionActionContext, { extension }: { extension: string }) {
+  setExtension({ commit }: ExtensionActionContext, { extension, name }: { extension: string, name: string }) {
     commit('SET_EXTENSION', extension);
+    commit('SET_NAME', name);
   },
-  async manageExtension({ dispatch, rootState, state }: ExtensionActionContext, { action }: { action: string }) {
+  resetBanners({ commit }: ExtensionActionContext) {
+    commit('SET_LOADING', true);
+    commit('SET_ERROR', '');
+    commit('SET_RESPONSE', '');
+  },
+  async manageExtension({
+    commit, dispatch, rootState, state, rootGetters,
+  }: ExtensionActionContext, { action }: { action: string }) {
+    dispatch('extensions/resetBanners', { }, { root: true });
+
     const credentials = rootState.credentials.credentials as Credentials;
     const result = await fetch(
       `http://localhost:${ credentials?.port }/v1/extensions/${ action }?id=${ state.extension }`,
@@ -52,10 +82,10 @@ export const actions = {
     );
 
     if (!result.ok) {
-      return {
-        error:   result.statusText,
-        loading: false,
-      };
+      commit('SET_ERROR', result.statusText);
+      commit('SET_LOADING', false);
+
+      return;
     }
 
     if (result.status === 201) {
@@ -65,10 +95,13 @@ export const actions = {
         dispatch('extensions/setIsInstalled', { isInstalled: true }, { root: true });
       }
 
-      return {
-        error:   '',
-        loading: false,
-      };
+      commit('SET_ERROR', '');
+      commit('SET_LOADING', false);
     }
+
+    commit(
+      'SET_RESPONSE',
+      rootGetters['i18n/t'](`marketplace.banners.${ action }`, { name: state.name }),
+    );
   },
 };

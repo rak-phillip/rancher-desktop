@@ -6,16 +6,14 @@ import LoadingIndicator from '@pkg/components/LoadingIndicator.vue';
 
 interface VuexBindings {
   isInstalled: boolean;
+  loading: boolean;
 }
 
 export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
   name:       'extension-details-button-install',
   components: { LoadingIndicator },
-  data() {
-    return { loading: false };
-  },
-  computed: {
-    ...mapState('extensions', ['isInstalled', 'extension']),
+  computed:   {
+    ...mapState('extensions', ['isInstalled', 'loading']),
     installationAction(): string {
       return this.isInstalled ? 'uninstall' : 'install';
     },
@@ -28,13 +26,10 @@ export default (Vue as VueConstructor<Vue & VuexBindings>).extend({
     },
   },
   methods: {
-    async appInstallation() {
-      this.loading = true;
-      const result = await this.$store.dispatch(
+    appInstallation() {
+      this.$store.dispatch(
         'extensions/manageExtension',
         { action: this.installationAction });
-
-      this.loading = result.loading;
     },
   },
 });

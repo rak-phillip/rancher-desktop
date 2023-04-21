@@ -29,4 +29,5 @@ export type ActionContext<T> = {
   state: T;
   rootState: any;
   getters: any;
+  rootGetters: any;
 };
