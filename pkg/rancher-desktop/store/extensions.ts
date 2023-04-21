@@ -62,6 +62,13 @@ export const actions = {
     commit('SET_ERROR', '');
     commit('SET_RESPONSE', '');
   },
+  resetState({ commit }: ExtensionActionContext) {
+    commit('SET_EXTENSION', '');
+    commit('SET_NAME', '');
+    commit('SET_LOADING', false);
+    commit('SET_ERROR', '');
+    commit('SET_RESPONSE', '');
+  },
   async manageExtension({
     commit, dispatch, rootState, state, rootGetters,
   }: ExtensionActionContext, { action }: { action: string }) {

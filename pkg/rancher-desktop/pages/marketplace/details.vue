@@ -225,6 +225,10 @@ export default {
       });
   },
 
+  beforeDestroy() {
+    this.$store.dispatch('extensions/resetState');
+  },
+
   methods: {
     formatDate(dateString) {
       const date = dayjs(dateString);
