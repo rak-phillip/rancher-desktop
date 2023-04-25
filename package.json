@@ -97,7 +97,7 @@
     "vue-slider-component": "3.2.20",
     "which": "3.0.0",
     "xdg-app-paths": "5.5.1",
-    "yaml": "2.1.3"
+    "yaml": "2.2.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
