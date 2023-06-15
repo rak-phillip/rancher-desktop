@@ -9,6 +9,7 @@ import config from '@rancher/shell/nuxt.config';
 // Paths to the shell folder when it is included as a node dependency
 const SHELL = './node_modules/@rancher/shell';
 const SHELL_ABS = path.join(__dirname, 'node_modules/@rancher/shell');
+const isDevelopment = /^dev/i.test(process.env.NODE_ENV);
 
 const c = config(__dirname, {
   excludes:   [],
@@ -38,6 +39,8 @@ c.build.extend = (config, { isClient, isDev }) => {
   config.target = 'electron-renderer';
   // Set a resolver alias for `./@pkg` so that we can load things from @ in CSS
   config.resolve.alias['./@pkg'] = path.resolve(__dirname, 'pkg', 'rancher-desktop');
+  config.resolve.alias['vue$'] = isDevelopment ? path.resolve(process.cwd(), 'node_modules', 'vue') : 'vue';
+
   /**
    * END Rancher Desktop customization to @rancher/shell configuration
    */
