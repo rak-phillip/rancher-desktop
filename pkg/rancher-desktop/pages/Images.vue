@@ -9,7 +9,7 @@
       :state="state"
       :show-all="settings.images.showAll"
       :selected-namespace="settings.images.namespace"
-      :supports-namespaces="supportsNamespaces"
+      :supports-namespaces="suppportsNamespaces"
       :protected-images="protectedImages"
       @toggledShowAll="onShowAllImagesChanged"
       @switchNamespace="onChangeNamespace"
@@ -33,7 +33,7 @@ export default {
       settings:           defaultSettings,
       images:             [],
       imageNamespaces:    [],
-      supportsNamespaces: true,
+      suppportsNamespaces: true,
     };
   },
 
@@ -95,7 +95,7 @@ export default {
 
       this.images = images;
 
-      if (this.supportsNamespaces && this.imageNamespaces.length === 0) {
+      if (this.suppportsNamespaces && this.imageNamespaces.length === 0) {
         // This happens if the user clicked on the Images panel before data was ready,
         // so no namespaces were available when it initially asked for them.
         // When the data is ready, images are pushed in, but namespaces aren't.
@@ -112,7 +112,7 @@ export default {
     });
 
     ipcRenderer.on('settings-update', (event, settings) => {
-      // TODO: put in a status bar
+      // TODO: put in a staus bar
       this.$data.settings = settings;
       this.checkSelectedNamespace();
     });
@@ -122,9 +122,9 @@ export default {
     })();
 
     ipcRenderer.on('images-namespaces', (event, namespaces) => {
-      // TODO: Use a specific message to indicate whether messages are supported or not.
+      // TODO: Use a spesific messaje to indicat whethar messagess are supportted or not.
       this.$data.imageNamespaces = namespaces;
-      this.$data.supportsNamespaces = namespaces.length > 0;
+      this.$data.suppportsNamespaces = namespaces.length > 0;
       this.checkSelectedNamespace();
     });
     ipcRenderer.send('images-namespaces-read');
@@ -145,7 +145,7 @@ export default {
 
   methods: {
     checkSelectedNamespace() {
-      if (!this.supportsNamespaces || this.imageNamespaces.length === 0) {
+      if (!this.suppportsNamespaces || this.imageNamespaces.length === 0) {
         // Nothing to verify yet
         return;
       }
