@@ -1,4 +1,3 @@
-
 import { ActionContext, MutationsType } from './ts-helpers';
 
 import { load as loadSettings } from '@pkg/config/settings';
