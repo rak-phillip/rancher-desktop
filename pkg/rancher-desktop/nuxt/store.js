@@ -10,24 +10,52 @@ let store = {};
 (function updateModules () {
   // If store is an exported method = classic mode (deprecated)
 
+  if (typeof store === 'function') {
+    return console.warn('Classic mode for store/ is deprecated and will be removed in Nuxt 3.')
+  }
+
   // Enforce store modules
   store.modules = store.modules || {}
 
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/action-menu.js'), 'action-menu.js')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/applicationSettings.ts'), 'applicationSettings.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/credentials.ts'), 'credentials.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/diagnostics.ts'), 'diagnostics.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/extensions.ts'), 'extensions.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/i18n.js'), 'i18n.js')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/imageManager.js'), 'imageManager.js')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/k8sManager.js'), 'k8sManager.js')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/page.ts'), 'page.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/preferences.ts'), 'preferences.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/prefs.js'), 'prefs.js')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/transientSettings.ts'), 'transientSettings.ts')
-  resolveStoreModules(require('../../pkg/rancher-desktop/store/ts-helpers.ts'), 'ts-helpers.ts')
+  resolveStoreModules(require('../store/action-menu.js'), 'action-menu.js')
+  resolveStoreModules(require('../store/applicationSettings.ts'), 'applicationSettings.ts')
+  resolveStoreModules(require('../store/credentials.ts'), 'credentials.ts')
+  resolveStoreModules(require('../store/diagnostics.ts'), 'diagnostics.ts')
+  resolveStoreModules(require('../store/extensions.ts'), 'extensions.ts')
+  resolveStoreModules(require('../store/i18n.js'), 'i18n.js')
+  resolveStoreModules(require('../store/imageManager.js'), 'imageManager.js')
+  resolveStoreModules(require('../store/k8sManager.js'), 'k8sManager.js')
+  resolveStoreModules(require('../store/page.ts'), 'page.ts')
+  resolveStoreModules(require('../store/preferences.ts'), 'preferences.ts')
+  resolveStoreModules(require('../store/prefs.js'), 'prefs.js')
+  resolveStoreModules(require('../store/transientSettings.ts'), 'transientSettings.ts')
+  resolveStoreModules(require('../store/ts-helpers.ts'), 'ts-helpers.ts')
 
   // If the environment supports hot reloading...
+
+  if (process.client && module.hot) {
+    // Whenever any Vuex module is updated...
+    module.hot.accept([
+      '../store/action-menu.js',
+      '../store/applicationSettings.ts',
+      '../store/credentials.ts',
+      '../store/diagnostics.ts',
+      '../store/extensions.ts',
+      '../store/i18n.js',
+      '../store/imageManager.js',
+      '../store/k8sManager.js',
+      '../store/page.ts',
+      '../store/preferences.ts',
+      '../store/prefs.js',
+      '../store/transientSettings.ts',
+      '../store/ts-helpers.ts',
+    ], () => {
+      // Update `root.modules` with the latest definitions.
+      updateModules()
+      // Trigger a hot update in the store.
+      window.$nuxt.$store.hotUpdate(store)
+    })
+  }
 })()
 
 // createStore

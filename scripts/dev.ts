@@ -115,8 +115,8 @@ class DevRunner extends events.EventEmitter {
     this.#rendererProcess = this.spawn(
       'Renderer process',
       'node',
-      'node_modules/nuxt/bin/nuxt.js',
-      'dev',
+      'node_modules/.bin/vue-cli-service',
+      'serve',
       '--hostname',
       'localhost',
       '--port',

@@ -4,11 +4,13 @@ import { decode, parsePath, withoutBase, withoutTrailingSlash, normalizeURL } fr
 import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 import NuxtError from './components/nuxt-error.vue'
 
-import '../../pkg/rancher-desktop/assets/styles/app.scss'
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
-import _6f6c098b from '../../pkg/rancher-desktop/layouts/default.vue'
-import _6f2938be from '../../pkg/rancher-desktop/layouts/dialog.vue'
-import _1e97457c from '../../pkg/rancher-desktop/layouts/preferences.vue'
+import '../assets/styles/app.scss'
+
+import _6f6c098b from '../layouts/default.vue'
+import _6f2938be from '../layouts/dialog.vue'
+import _1e97457c from '../layouts/preferences.vue'
 
 const layouts = { "_default": sanitizeComponent(_6f6c098b),"_dialog": sanitizeComponent(_6f2938be),"_preferences": sanitizeComponent(_1e97457c) }
 
@@ -43,6 +45,7 @@ export default {
       }
     }, [
 
+      h(NuxtBuildIndicator),
       transitionEl
     ])
   },
@@ -166,6 +169,10 @@ export default {
     },
 
     setLayout (layout) {
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }

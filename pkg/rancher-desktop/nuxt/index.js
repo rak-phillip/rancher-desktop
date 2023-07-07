@@ -13,15 +13,15 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_cookieuniversalnuxt_f661ed46 from 'nuxt_plugin_cookieuniversalnuxt_f661ed46' // Source: ./cookie-universal-nuxt.js (mode: 'all')
-import nuxt_plugin_shortkey_42a5844e from 'nuxt_plugin_shortkey_42a5844e' // Source: ../../pkg/rancher-desktop/plugins/shortkey (mode: 'client')
-import nuxt_plugin_tooltip_ba49f866 from 'nuxt_plugin_tooltip_ba49f866' // Source: ../../pkg/rancher-desktop/plugins/tooltip (mode: 'all')
-import nuxt_plugin_vselect_294cd8ae from 'nuxt_plugin_vselect_294cd8ae' // Source: ../../pkg/rancher-desktop/plugins/v-select (mode: 'all')
-import nuxt_plugin_vuejsmodal_f50827f4 from 'nuxt_plugin_vuejsmodal_f50827f4' // Source: ../../pkg/rancher-desktop/plugins/vue-js-modal (mode: 'all')
-import nuxt_plugin_i18n_6a80ea94 from 'nuxt_plugin_i18n_6a80ea94' // Source: ../../pkg/rancher-desktop/plugins/i18n (mode: 'all')
-import nuxt_plugin_directives_d0867c0c from 'nuxt_plugin_directives_d0867c0c' // Source: ../../pkg/rancher-desktop/plugins/directives (mode: 'all')
-import nuxt_plugin_cleanhtmldirective_1b7ed927 from 'nuxt_plugin_cleanhtmldirective_1b7ed927' // Source: ../../pkg/rancher-desktop/plugins/clean-html-directive (mode: 'all')
-import nuxt_plugin_extendrouter_516ab4b4 from 'nuxt_plugin_extendrouter_516ab4b4' // Source: ../../pkg/rancher-desktop/plugins/extend-router (mode: 'all')
+import cookieUniversalNuxt from './cookie-universal-nuxt.js';
+import '../plugins/shortkey';
+import '../plugins/tooltip';
+import '../plugins/v-select';
+import '../plugins/vue-js-modal';
+import '../plugins/i18n';
+import '../plugins/directives';
+import '../plugins/clean-html-directive';
+import '../plugins/extend-router';
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -215,40 +215,8 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_cookieuniversalnuxt_f661ed46 === 'function') {
-    await nuxt_plugin_cookieuniversalnuxt_f661ed46(app.context, inject)
-  }
-
-  if (process.client && typeof nuxt_plugin_shortkey_42a5844e === 'function') {
-    await nuxt_plugin_shortkey_42a5844e(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_tooltip_ba49f866 === 'function') {
-    await nuxt_plugin_tooltip_ba49f866(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_vselect_294cd8ae === 'function') {
-    await nuxt_plugin_vselect_294cd8ae(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_vuejsmodal_f50827f4 === 'function') {
-    await nuxt_plugin_vuejsmodal_f50827f4(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_i18n_6a80ea94 === 'function') {
-    await nuxt_plugin_i18n_6a80ea94(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_directives_d0867c0c === 'function') {
-    await nuxt_plugin_directives_d0867c0c(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_cleanhtmldirective_1b7ed927 === 'function') {
-    await nuxt_plugin_cleanhtmldirective_1b7ed927(app.context, inject)
-  }
-
-  if (typeof nuxt_plugin_extendrouter_516ab4b4 === 'function') {
-    await nuxt_plugin_extendrouter_516ab4b4(app.context, inject)
+  if (typeof cookieUniversalNuxt === 'function') {
+    await cookieUniversalNuxt(app.context, inject)
   }
 
   // Lock enablePreview in context
