@@ -16,19 +16,27 @@ console.log('NOT FAIL');
 console.log('NOT FAIL');
 
 module.exports = {
-  chainWebpack: (config) => {
-    // Set a resolver alias for `./@pkg` so that we can load things from @ in CSS
-    config.resolve.alias['./@pkg'] = __dirname;
+//       '~assets/styles/base/_variables.scss',
+//       '~assets/styles/base/_functions.scss',
+//       '~assets/styles/base/_mixins.scss',
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: `
+          @use 'sass:math';
+          @import "@pkg/assets/styles/base/_variables.scss";
+          @import "@pkg/assets/styles/base/_functions.scss";
+          @import "@pkg/assets/styles/base/_mixins.scss";
+        `,
+      },
+    },
   },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns:     [
-        // Paths to your Sass/SCSS files
-        path.resolve(__dirname, './assets/styles/base/_mixins.scss'),
-        path.resolve(__dirname, './assets/styles/base/_functions.scss'),
-        path.resolve(__dirname, './assets/styles/base/_variables.scss'),
-      ],
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '~':    path.resolve(__dirname),
+        '@pkg': path.resolve(__dirname),
+      },
     },
   },
 
@@ -36,8 +44,8 @@ module.exports = {
 
   pages: {
     index: {
-      entry:    path.join(__dirname, './nuxt/client.js'),
-      template: path.join(__dirname, './public/index.html'),
+      entry:    path.join(__dirname, 'nuxt', 'client.js'),
+      template: path.join(__dirname, 'public', 'index.html'),
     },
   },
 };
