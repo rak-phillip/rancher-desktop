@@ -1,7 +1,7 @@
 <script lang="ts">
+import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
 import Vue from 'vue';
 
-import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
 /**
  * Groups several controls as well as labels
  */

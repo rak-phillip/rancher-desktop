@@ -5,14 +5,13 @@ import fs from 'fs';
 import os from 'os';
 import { dirname, join } from 'path';
 
-import _ from 'lodash';
-
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import clone from '@pkg/utils/clone';
 import Logging from '@pkg/utils/logging';
 import paths from '@pkg/utils/paths';
 import { RecursivePartial, RecursiveReadonly } from '@pkg/utils/typeUtils';
 import { getProductionVersion } from '@pkg/utils/version';
+import _ from 'lodash';
 
 const console = Logging.settings;
 

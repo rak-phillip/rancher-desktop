@@ -3,11 +3,9 @@ import os from 'os';
 import path from 'path';
 
 import { findHomeDir } from '@kubernetes/client-node';
-
 import K3sHelper from '@pkg/backend/k3sHelper';
 import { State } from '@pkg/backend/k8s';
 import { Settings, ContainerEngine, runInDebugMode } from '@pkg/config/settings';
-import type { IntegrationManager } from '@pkg/integrations/integrationManager';
 import mainEvents from '@pkg/main/mainEvents';
 import BackgroundProcess from '@pkg/utils/backgroundProcess';
 import { spawn, spawnFile } from '@pkg/utils/childProcess';
@@ -16,6 +14,8 @@ import Logging from '@pkg/utils/logging';
 import paths from '@pkg/utils/paths';
 import { executable } from '@pkg/utils/resources';
 import { defined, RecursivePartial } from '@pkg/utils/typeUtils';
+
+import type { IntegrationManager } from '@pkg/integrations/integrationManager';
 
 const console = Logging.integrations;
 

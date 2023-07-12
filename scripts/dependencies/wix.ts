@@ -1,12 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
+import { spawnFile } from '@pkg/utils/childProcess';
 import semver from 'semver';
 
 import { Dependency, DownloadContext, getPublishedReleaseTagNames } from '../lib/dependencies';
 import { download } from '../lib/download';
-
-import { spawnFile } from '@pkg/utils/childProcess';
 
 /**
  * Wix downloads the latest build of WiX3.

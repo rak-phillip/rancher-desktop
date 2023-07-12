@@ -5,11 +5,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import * as childProcess from '@pkg/utils/childProcess';
 import { getSignVendorPath } from 'app-builder-lib/out/codeSign/windowsCodeSign';
 import defaults from 'lodash/defaultsDeep';
 import yaml from 'yaml';
-
-import * as childProcess from '@pkg/utils/childProcess';
 
 /**
  * Mandatory configuration for Windows.

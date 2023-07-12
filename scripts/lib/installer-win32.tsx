@@ -11,12 +11,11 @@ import fs from 'fs';
 import path from 'path';
 
 import asar from '@electron/asar';
+import { spawnFile } from '@pkg/utils/childProcess';
 import Mustache from 'mustache';
 import yaml from 'yaml';
 
 import generateFileList from './installer-win32-gen';
-
-import { spawnFile } from '@pkg/utils/childProcess';
 
 /**
  * Return the contents of package.json embedded in the application.

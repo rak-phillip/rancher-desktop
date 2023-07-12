@@ -11,12 +11,11 @@ import stream from 'stream';
 import util from 'util';
 import zlib from 'zlib';
 
+import { RecursivePartial } from '@pkg/utils/typeUtils';
+import babelConfig from 'babel.config';
 import _ from 'lodash';
 import tar from 'tar-stream';
 import webpack from 'webpack';
-
-import { RecursivePartial } from '@pkg/utils/typeUtils';
-import babelConfig from 'babel.config';
 
 /**
  * A promise that is resolved when the child exits.

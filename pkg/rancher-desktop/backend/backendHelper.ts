@@ -1,8 +1,7 @@
-import merge from 'lodash/merge';
-import semver from 'semver';
-
 import { BackendSettings } from '@pkg/backend/backend';
 import { ContainerEngine } from '@pkg/config/settings';
+import merge from 'lodash/merge';
+import semver from 'semver';
 
 export default class BackendHelper {
   /**

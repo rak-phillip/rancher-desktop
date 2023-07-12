@@ -1,10 +1,6 @@
 <script lang="ts">
 import os from 'os';
 
-import { RadioButton, RadioGroup } from '@rancher/components';
-import Vue from 'vue';
-import { mapGetters } from 'vuex';
-
 import RdInput from '@pkg/components/RdInput.vue';
 import RdSelect from '@pkg/components/RdSelect.vue';
 import LabeledBadge from '@pkg/components/form/LabeledBadge.vue';
@@ -13,6 +9,9 @@ import {
   CacheMode, MountType, ProtocolVersion, SecurityModel, Settings, VMType,
 } from '@pkg/config/settings';
 import { RecursiveTypes } from '@pkg/utils/typeUtils';
+import { RadioButton, RadioGroup } from '@rancher/components';
+import Vue from 'vue';
+import { mapGetters } from 'vuex';
 
 import type { PropType } from 'vue';
 
@@ -103,7 +102,7 @@ export default Vue.extend({
     updateValue<P extends keyof RecursiveTypes<Settings>>(property: P, value: RecursiveTypes<Settings>[P]) {
       this.$emit('update', property, value);
     },
-    disabledVirtIoFsTooltip(disabled: boolean): { content: string } | {} {
+    disabledVirtIoFsTooltip(disabled: boolean): { content: string } | Record<string, never> {
       let tooltip = {};
 
       if (disabled) {

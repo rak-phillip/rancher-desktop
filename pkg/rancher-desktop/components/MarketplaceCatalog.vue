@@ -1,11 +1,10 @@
 <script lang="ts">
+import MarketplaceCard from '@pkg/components/MarketplaceCard.vue';
+import { Settings, ContainerEngine } from '@pkg/config/settings';
 import Vue, { VueConstructor } from 'vue';
 import { mapGetters } from 'vuex';
 
 import { demoMarketplace } from '../utils/_demo_marketplace_items.js';
-
-import MarketplaceCard from '@pkg/components/MarketplaceCard.vue';
-import { Settings, ContainerEngine } from '@pkg/config/settings';
 
 type FilteredExtensions = typeof demoMarketplace.summaries;
 

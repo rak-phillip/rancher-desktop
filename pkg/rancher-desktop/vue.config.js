@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
 
 const outputDir = 'dist';
@@ -16,9 +15,6 @@ console.log('NOT FAIL');
 console.log('NOT FAIL');
 
 module.exports = {
-//       '~assets/styles/base/_variables.scss',
-//       '~assets/styles/base/_functions.scss',
-//       '~assets/styles/base/_mixins.scss',
   css: {
     loaderOptions: {
       sass: {

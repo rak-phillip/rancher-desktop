@@ -41,7 +41,8 @@
     "node_modules",
     ".nuxt",
     "dist",
-    "scripts/lib/installer-*.tsx"
+    "scripts/lib/installer-*.tsx",
+    "scripts/lib/installer-win32-gen.tsx"
   ],
   "include": [
     "**/*",

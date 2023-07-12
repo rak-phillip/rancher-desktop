@@ -9,9 +9,9 @@ import childProcess from 'child_process';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
-import buildInstaller from './lib/installer-win32';
-
 import { spawnFile } from '@pkg/utils/childProcess';
+
+import buildInstaller from './lib/installer-win32';
 
 /** Get the argument value (if any) for any of the given argument names */
 function getArgValue(args: string[], ...argNames: string[]): string | undefined {

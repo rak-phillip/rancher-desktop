@@ -1,8 +1,8 @@
 <script lang="ts">
-import Vue from 'vue';
 
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
 import paths from '@pkg/utils/paths';
+import Vue from 'vue';
 
 export default Vue.extend({
   layout:   'dialog',

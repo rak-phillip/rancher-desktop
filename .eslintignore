@@ -25,3 +25,4 @@ pkg/rancher-desktop/nuxt/
 /bats/bats.tar.gz
 /bats/logs/
 script_logs/
+scripts/lib/installer-win32-gen.tsx

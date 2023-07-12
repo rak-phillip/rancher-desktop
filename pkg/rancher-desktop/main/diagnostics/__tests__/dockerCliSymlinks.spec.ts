@@ -2,6 +2,10 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
+import paths from '@pkg/utils/paths';
+
+import { CheckerDockerCLISymlink } from '../dockerCliSymlinks';
+
 // The (mock) application directory.
 let appDir = process.cwd();
 
@@ -25,12 +29,6 @@ jest.spyOn(fs.promises, 'readdir').mockImplementation((dir, encoding) => {
 
   return Promise.resolve([]);
 });
-
-// eslint-disable-next-line import/first -- Need to mock first.
-import { CheckerDockerCLISymlink } from '../dockerCliSymlinks';
-
-// eslint-disable-next-line import/first -- Need to mock first.
-import paths from '@pkg/utils/paths';
 
 const { mkdtemp, rm } = jest.requireActual('fs/promises');
 const describeUnix = process.platform === 'win32' ? describe.skip : describe;

@@ -2,13 +2,12 @@
 
 import os from 'os';
 
-import _ from 'lodash';
-
-import SettingsValidator from '../settingsValidator';
-
 import * as settings from '@pkg/config/settings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import { RecursivePartial } from '@pkg/utils/typeUtils';
+import _ from 'lodash';
+
+import SettingsValidator from '../settingsValidator';
 
 const cfg = _.merge(
   {},

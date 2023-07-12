@@ -3,9 +3,9 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { HttpCommandServer } from '../httpCommandServer';
-
 import { spawnFile } from '@pkg/utils/childProcess';
+
+import { HttpCommandServer } from '../httpCommandServer';
 
 describe(HttpCommandServer, () => {
   let itWindows = it;

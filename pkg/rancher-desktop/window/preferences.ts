@@ -1,14 +1,13 @@
 import path from 'path';
 
-import { app, dialog } from 'electron';
-
-import { webRoot, createWindow } from '.';
-
 import { Help } from '@pkg/config/help';
 import { NavItemName } from '@pkg/config/transientSettings';
 import paths from '@pkg/utils/paths';
 import { CommandOrControl, Shortcuts } from '@pkg/utils/shortcuts';
 import { getVersion } from '@pkg/utils/version';
+import { app, dialog } from 'electron';
+
+import { webRoot, createWindow } from '.';
 
 interface NavItems {
   name: NavItemName;
