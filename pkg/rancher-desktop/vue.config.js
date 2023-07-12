@@ -38,6 +38,20 @@ module.exports = {
         '@pkg': path.resolve(__dirname),
       },
     },
+    module: {
+      rules: [
+      // Handler for yaml files (used for i18n files, for example)
+        {
+          test:    /\.ya?ml$/i,
+          loader:  'js-yaml-loader',
+          options: { name: '[path][name].[ext]' },
+        },
+        {
+          test:   /(?:^|[/\\])assets[/\\]scripts[/\\]/,
+          loader: 'raw-loader',
+        },
+      ],
+    },
   },
 
   outputDir,

@@ -40,7 +40,8 @@
   "exclude": [
     "node_modules",
     ".nuxt",
-    "dist"
+    "dist",
+    "scripts/lib/installer-*.tsx"
   ],
   "include": [
     "**/*",
