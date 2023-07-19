@@ -58,7 +58,7 @@
     "agent-base": "6.0.2",
     "bufferutil": "4.0.7",
     "cookie-universal-nuxt": "2.2.2",
-    "core-js": "3.25.3",
+    "core-js": "3.31.0",
     "dayjs": "1.11.5",
     "dompurify": "3.0.1",
     "electron-updater": "^5.3.0",
