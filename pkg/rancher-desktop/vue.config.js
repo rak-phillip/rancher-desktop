@@ -27,16 +27,41 @@ module.exports = {
       },
     },
   },
+
   configureWebpack: {
     resolve: {
-      alias: {
+      extensions: ['.tsx', '.ts', '.js', '.vue', '.scss'],
+      alias:      {
         '~':    path.resolve(__dirname),
         '@pkg': path.resolve(__dirname),
       },
     },
     module: {
       rules: [
-      // Handler for yaml files (used for i18n files, for example)
+        {
+          test: /\.tsx?$/,
+          use:  [
+            {
+              loader:  'cache-loader',
+              options: {
+                cacheDirectory:  'node_modules/.cache/ts-loader',
+                cacheIdentifier: '3596741e',
+              },
+            },
+            {
+              loader:  'ts-loader',
+              options: {
+                transpileOnly:     true,
+                happyPackMode:     false,
+                appendTsxSuffixTo: [
+                  '\\.vue$',
+                ],
+                configFile: path.join(__dirname, 'tsconfig.json'),
+              },
+            },
+          ],
+        },
+        // Handler for yaml files (used for i18n files, for example)
         {
           test:    /\.ya?ml$/i,
           loader:  'js-yaml-loader',

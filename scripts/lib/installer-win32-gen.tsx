@@ -1,67 +1,8 @@
-/** @jsx Element.new */
+/** @jsx createElement */
 
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
-
-/**
- * Element is a class for interpreting JSX; we only need the bare basics to
- * generate a valid XML as input to the WiX toolchain.
- */
-
-export class Element {
-  constructor(tag: string, attribs: Record<string, string>, ...children: (Element | string)[]) {
-    this.tag = tag;
-    this.attribs = attribs;
-    this.children = children;
-  }
-
-  /**
-   * Create a new element; this is used by the TypeScript JSX support.
-   */
-  static new(tag: string, attribs: Record<string, string> | null, ...children: (Element | Element[] | string)[]) {
-    return new Element(tag, attribs ?? {}, ...children.flat().filter(x => x));
-  }
-
-  tag: string;
-  attribs: Record<string, string>;
-
-  children: (Element | string)[];
-
-  /** Convert the Element to serialized XML. */
-  toXML(indent = 0) {
-    const indentString = (new Array(indent + 1)).join(' ');
-    let result = `${ indentString }<${ this.tag }`;
-
-    for (const [key, value] of Object.entries(this.attribs)) {
-      result += ` ${ key }="${ value }"`;
-    }
-    if (this.children.length < 1) {
-      result += '/>\n';
-    } else {
-      result += '>';
-      if (this.children.some(c => c instanceof Element)) {
-        result += '\n';
-      }
-      for (const child of this.children) {
-        if (typeof child === 'string') {
-          // For text content of elements, always use CDATA.
-          result += `<![CDATA[${ child }]]>`;
-        } else if (child instanceof Element) {
-          result += child.toXML(indent + 2);
-        } else {
-          throw new TypeError(`Don't know how to serialize ${ child } (type ${ typeof child })`);
-        }
-      }
-      if (this.children.some(c => c instanceof Element)) {
-        result += indentString;
-      }
-      result += `</${ this.tag }>${ '\n' }`;
-    }
-
-    return result;
-  }
-}
 
 // When rendering, the JSX tag name is supposed to be the name of a component
 // that's passed to the first argument of React.createElement; so we need plain
@@ -162,7 +103,7 @@ export default async function generateFileList(rootPath: string): Promise<string
 
   const descendantDirs = getDescendantDirs(rootDir).filter(d => d.files.length > 0);
 
-  const specialComponents: Record<string, (d: directory, f: { name: string, id: string }) => Element | null> = {
+  const specialComponents: Record<string, (d: directory, f: { name: string, id: string }) => JSX.Element | null> = {
     'Rancher Desktop.exe': (d, f) => {
       return <Component>
         <File
