@@ -2,18 +2,6 @@ const path = require('path');
 
 const outputDir = 'dist';
 
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('DIR NAME', { __dirname });
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-console.log('NOT FAIL');
-
 module.exports = {
   css: {
     loaderOptions: {

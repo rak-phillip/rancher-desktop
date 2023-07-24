@@ -1,5 +1,7 @@
 /** @jsx createElement */
 
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
@@ -214,7 +216,8 @@ export default async function generateFileList(rootPath: string): Promise<string
 
   rootDir.files.push({ name: 'wix-install-wsl.ps1', id: 'f_install_wsl' });
 
-  return (<Fragment>
+  const jsxElement = (
+    <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="APPLICATIONFOLDER" Name="Rancher Desktop">
@@ -274,5 +277,8 @@ export default async function generateFileList(rootPath: string): Promise<string
       })}
     </ComponentGroup>,
     )}
-  </Fragment>).toXML();
+    </Fragment>
+  );
+
+  return renderToStaticMarkup(jsxElement);
 }
