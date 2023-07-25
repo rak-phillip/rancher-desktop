@@ -242,11 +242,13 @@ export default {
     }
   },
 
-  mapArchToGoArch(arch: string) {
-    const result = ({
+  mapArchToGoArch(arch: string): string {
+    const archMap: { readonly x64: string; readonly arm64: string } = {
       x64:   'amd64',
       arm64: 'arm64',
-    } as const)[arch];
+    };
+
+    const result = archMap[arch as keyof typeof archMap];
 
     if (!result) {
       throw new Error(`Architecture ${ arch } is not supported.`);

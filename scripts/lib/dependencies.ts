@@ -52,6 +52,8 @@ export type DependencyVersions = {
   moproxy: string;
 };
 
+type Awaited<T> = T extends Promise<infer U> ? U : T;
+
 export async function readDependencyVersions(path: string): Promise<DependencyVersions> {
   const rawContents = await fs.promises.readFile(path, 'utf-8');
 

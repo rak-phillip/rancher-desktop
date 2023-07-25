@@ -1,6 +1,21 @@
+const fs = require('fs');
 const path = require('path');
 
-const outputDir = 'dist';
+const webpack = require('webpack');
+
+const babelConfig = require('../../babel.config');
+
+const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
+const mode = isDevelopment ? 'development' : 'production';
+const rootDir = path.resolve(__dirname, '..', '..');
+const distDir = path.resolve(rootDir, 'dist');
+const appDir = path.resolve(distDir, 'app');
+
+const packageMeta = () => {
+  const raw = fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8');
+
+  return JSON.parse(raw);
+};
 
 module.exports = {
   css: {
@@ -17,53 +32,57 @@ module.exports = {
   },
 
   configureWebpack: {
-    resolve: {
-      extensions: ['.tsx', '.ts', '.js', '.vue', '.scss'],
-      alias:      {
-        '~':    path.resolve(__dirname),
-        '@pkg': path.resolve(__dirname),
-      },
+    mode,
+    target: 'electron-main',
+    node:   {
+      __dirname:  false,
+      __filename: false,
+    },
+    entry:     { background: path.resolve(rootDir, 'background') },
+    externals: [...Object.keys(packageMeta().dependencies)],
+    devtool:   isDevelopment ? 'source-map' : false,
+    resolve:   {
+      alias:      { '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop') },
+      extensions: ['.ts', '.js', '.json'],
+      modules:    ['node_modules'],
+    },
+    output: {
+      libraryTarget: 'commonjs2',
+      filename:      '[name].js',
     },
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          use:  [
-            {
-              loader:  'cache-loader',
-              options: {
-                cacheDirectory:  'node_modules/.cache/ts-loader',
-                cacheIdentifier: '3596741e',
-              },
-            },
-            {
-              loader:  'ts-loader',
-              options: {
-                transpileOnly:     true,
-                happyPackMode:     false,
-                appendTsxSuffixTo: [
-                  '\\.vue$',
-                ],
-                configFile: path.join(__dirname, 'tsconfig.json'),
-              },
-            },
-          ],
-        },
-        // Handler for yaml files (used for i18n files, for example)
-        {
-          test:    /\.ya?ml$/i,
-          loader:  'js-yaml-loader',
-          options: { name: '[path][name].[ext]' },
+          test: /\.ts$/,
+          use:  { loader: 'ts-loader' },
         },
         {
-          test:   /(?:^|[/\\])assets[/\\]scripts[/\\]/,
-          loader: 'raw-loader',
+          test: /\.js$/,
+          use:  {
+            loader:  'babel-loader',
+            options: {
+              ...babelConfig,
+              cacheDirectory: true,
+            },
+          },
+          exclude: [/node_modules/, distDir],
+        },
+        {
+          test: /\.ya?ml$/,
+          use:  { loader: 'js-yaml-loader' },
+        },
+        {
+          test: /(?:^|[/\\])assets[/\\]scripts[/\\]/,
+          use:  { loader: 'raw-loader' },
         },
       ],
     },
+    plugins: [
+      new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV || 'production' }),
+    ],
   },
 
-  outputDir,
+  outputDir: appDir,
 
   pages: {
     index: {
