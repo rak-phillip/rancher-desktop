@@ -15,7 +15,8 @@
     "url": "https://github.com/rancher-sandbox/rancher-desktop.git"
   },
   "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=pkg/rancher-desktop/vue.config.js node scripts/ts-wrapper.js scripts/dev.ts",
+    "dev": "node scripts/ts-wrapper.js scripts/dev.ts",
+    "dev:ui": "VUE_CLI_SERVICE_CONFIG_PATH=pkg/rancher-desktop/vue.config.js vue-cli-service serve",
     "lint": "yarn lint:fix",
     "lint:fix": "yarn lint:typescript:fix && yarn lint:go:fix ",
     "lint:nofix": "yarn lint:typescript:nofix && yarn lint:go:nofix",

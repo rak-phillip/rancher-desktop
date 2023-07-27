@@ -280,5 +280,6 @@ export default async function generateFileList(rootPath: string): Promise<string
     </Fragment>
   );
 
+  // @ts-ignore
   return renderToStaticMarkup(jsxElement);
 }

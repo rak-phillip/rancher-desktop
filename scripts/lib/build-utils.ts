@@ -15,7 +15,7 @@ import { RecursivePartial } from '@pkg/utils/typeUtils';
 import babelConfig from 'babel.config';
 import _ from 'lodash';
 import tar from 'tar-stream';
-import webpack from 'webpack';
+import webpack, { RuleSetRule } from 'webpack';
 
 /**
  * A promise that is resolved when the child exits.
@@ -182,25 +182,19 @@ export default {
    * WebPack configuration for the preload script
    */
   get webpackPreloadConfig(): webpack.Configuration {
-    function isRuleSetLoader(i: webpack.RuleSetUseItem): i is webpack.RuleSetLoader {
-      return typeof i === 'object';
-    }
-
-    const overrides: RecursivePartial<webpack.Configuration> = {
+    const overrides: webpack.Configuration = {
       target: 'electron-preload',
-      output: { libraryTarget: 'var', path: path.join(this.rootDir, 'resources') },
+      output: { library: { type: 'var' }, path: path.join(this.rootDir, 'resources') },
     };
-    const result = _.merge({}, this.webpackConfig, overrides);
+
+    const result: webpack.Configuration = Object.assign({}, this.webpackConfig, overrides);
     const rules = result.module?.rules ?? [];
 
-    const uses = rules.flatMap((r) => {
-      if (typeof r.use !== 'object') {
-        return [];
-      }
+    const uses: webpack.RuleSetRule[] = rules.filter(
+      (rule): rule is webpack.RuleSetRule => typeof rule !== 'boolean' && typeof rule !== 'string'
+    );
 
-      return Array.isArray(r.use) ? r.use : [r.use];
-    }).filter(isRuleSetLoader);
-    const tsLoader = uses.find(u => u.loader === 'ts-loader');
+    const tsLoader = uses.find((u) => u.loader === 'ts-loader');
 
     if (tsLoader) {
       tsLoader.options = _.merge({}, tsLoader.options, { compilerOptions: { noEmit: false } });

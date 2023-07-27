@@ -101,7 +101,7 @@ export default Vue.extend({
   },
   directives: {
     focus: {
-      inserted: function(element) {
+      inserted (element) {
         element.focus();
       },
     },

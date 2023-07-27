@@ -115,13 +115,13 @@ class DevRunner extends events.EventEmitter {
     this.#rendererProcess = this.spawn(
       'Renderer process',
       'node',
-      'node_modules/.bin/vue-cli-service',
-      'serve',
+      'node_modules/.bin/yarn',
+      'run',
+      'dev:ui',
       '--hostname',
       'localhost',
       '--port',
       this.rendererPort.toString(),
-      buildUtils.rendererSrcDir,
     );
 
     return Promise.resolve();
