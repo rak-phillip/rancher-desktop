@@ -87,6 +87,7 @@ import EngineSelector from '@pkg/components/EngineSelector.vue';
 import PathManagementSelector from '@pkg/components/PathManagementSelector.vue';
 import RdSelect from '@pkg/components/RdSelect.vue';
 import RdCheckbox from '@pkg/components/form/RdCheckbox.vue';
+import RdFieldset from '@pkg/components/form/RdFieldset.vue';
 import { defaultSettings } from '@pkg/config/settings';
 import { PathManagementStrategy } from '@pkg/integrations/pathManager';
 import { ipcRenderer } from '@pkg/utils/ipcRenderer';
@@ -95,8 +96,6 @@ import Vue from 'vue';
 import { mapGetters } from 'vuex';
 
 import type { ContainerEngine } from '@pkg/config/settings';
-
-import RdFieldset from '~/components/form/RdFieldset.vue';
 
 export default Vue.extend({
   components: {

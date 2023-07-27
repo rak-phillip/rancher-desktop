@@ -1,6 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { mocked } from 'ts-jest/utils';
 
 import paths from '@pkg/utils/paths';
 
@@ -30,9 +31,25 @@ jest.spyOn(fs.promises, 'readdir').mockImplementation((dir, encoding) => {
   return Promise.resolve([]);
 });
 
+// Mock '@pkg/utils/paths' module
+jest.mock('@pkg/utils/paths', () => {
+  const originalPaths = jest.requireActual('@pkg/utils/paths').default;
+  return {
+    ...originalPaths,
+    resources: '', // Provide your custom implementation for 'resources' property here
+  };
+});
+
 const { mkdtemp, rm } = jest.requireActual('fs/promises');
 const describeUnix = process.platform === 'win32' ? describe.skip : describe;
 const describeWin32 = process.platform === 'win32' ? describe : describe.skip;
+
+// Helper function to replace properties in 'paths' object
+const replacePathsResources = (resourcesDir: string) => {
+  const originalPaths = jest.requireActual('@pkg/utils/paths').default;
+  mocked(originalPaths, true).resources = resourcesDir;
+  return () => (originalPaths.resources = ''); // Restore the original value
+};
 
 describeUnix(CheckerDockerCLISymlink, () => {
   const executable = 'test-executable';
@@ -40,18 +57,19 @@ describeUnix(CheckerDockerCLISymlink, () => {
   const rdBinDir = path.join(os.homedir(), '.rd', 'bin');
   const rdBinExecutable = path.join(rdBinDir, executable);
   let appDirExecutable = '';
-  let replacedPathsResources: jest.ReplaceProperty<string>;
+  let restorePathsResources: () => void;
 
-  beforeAll(async() => {
+  beforeAll(async () => {
     appDir = await mkdtemp(path.join(os.tmpdir(), 'rd-diag-'));
     const resourcesDir = path.join(appDir, 'resources');
 
     await fs.promises.mkdir(resourcesDir);
     appDirExecutable = path.join(resourcesDir, os.platform(), 'bin', executable);
-    replacedPathsResources = jest.replaceProperty(paths, 'resources', resourcesDir);
+    restorePathsResources = replacePathsResources(resourcesDir); // Replace 'paths.resources'
   });
-  afterAll(async() => {
-    replacedPathsResources.restore();
+
+  afterAll(async () => {
+    restorePathsResources(); // Restore the original 'paths' object
     await rm(appDir, { recursive: true, force: true });
   });
 

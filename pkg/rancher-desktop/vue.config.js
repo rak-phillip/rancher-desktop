@@ -1,23 +1,12 @@
-const fs = require('fs');
+const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
+const { FALSE } = require('sass');
 
-const webpack = require('webpack');
-
-const babelConfig = require('../../babel.config');
-
-const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
-const mode = isDevelopment ? 'development' : 'production';
 const rootDir = path.resolve(__dirname, '..', '..');
-const distDir = path.resolve(rootDir, 'dist');
-const appDir = path.resolve(distDir, 'app');
 
-const packageMeta = () => {
-  const raw = fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8');
+module.exports = defineConfig({
+  transpileDependencies: true,
 
-  return JSON.parse(raw);
-};
-
-module.exports = {
   css: {
     loaderOptions: {
       sass: {
@@ -32,57 +21,29 @@ module.exports = {
   },
 
   configureWebpack: {
-    mode,
-    target: 'electron-main',
-    node:   {
-      __dirname:  false,
-      __filename: false,
-    },
-    entry:     { background: path.resolve(rootDir, 'background') },
-    externals: [...Object.keys(packageMeta().dependencies)],
-    devtool:   isDevelopment ? 'source-map' : false,
-    resolve:   {
-      alias:      { '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop') },
-      extensions: ['.ts', '.js', '.json'],
-      modules:    ['node_modules'],
-    },
-    output: {
-      libraryTarget: 'commonjs2',
-      filename:      '[name].js',
+    resolve: {
+      alias: {
+        '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop')
+      },
+      fallback: {
+        crypto: require.resolve('crypto-browserify'),
+        os: require.resolve('os-browserify/browser'),
+        child_process: false,
+        path: false,
+        fs: false,
+        stream: false,
+        util: false,
+      }
     },
     module: {
       rules: [
         {
-          test: /\.ts$/,
-          use:  { loader: 'ts-loader' },
-        },
-        {
-          test: /\.js$/,
-          use:  {
-            loader:  'babel-loader',
-            options: {
-              ...babelConfig,
-              cacheDirectory: true,
-            },
-          },
-          exclude: [/node_modules/, distDir],
-        },
-        {
           test: /\.ya?ml$/,
-          use:  { loader: 'js-yaml-loader' },
+          use: { loader: 'js-yaml-loader' },
         },
-        {
-          test: /(?:^|[/\\])assets[/\\]scripts[/\\]/,
-          use:  { loader: 'raw-loader' },
-        },
-      ],
-    },
-    plugins: [
-      new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV || 'production' }),
-    ],
+      ]
+    }
   },
-
-  outputDir: appDir,
 
   pages: {
     index: {
@@ -90,7 +51,101 @@ module.exports = {
       template: path.join(__dirname, 'public', 'index.html'),
     },
   },
-};
+});
+
+// const fs = require('fs');
+// const path = require('path');
+
+// const webpack = require('webpack');
+
+// const babelConfig = require('../../babel.config');
+
+// const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
+// const mode = isDevelopment ? 'development' : 'production';
+// const rootDir = path.resolve(__dirname, '..', '..');
+// const distDir = path.resolve(rootDir, 'dist');
+// const appDir = path.resolve(distDir, 'app');
+
+// const packageMeta = () => {
+//   const raw = fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8');
+
+//   return JSON.parse(raw);
+// };
+
+// module.exports = {
+//   css: {
+//     loaderOptions: {
+//       sass: {
+//         additionalData: `
+//           @use 'sass:math';
+//           @import "@pkg/assets/styles/base/_variables.scss";
+//           @import "@pkg/assets/styles/base/_functions.scss";
+//           @import "@pkg/assets/styles/base/_mixins.scss";
+//         `,
+//       },
+//     },
+//   },
+
+//   configureWebpack: {
+//     mode,
+//     target: 'electron-main',
+//     node:   {
+//       __dirname:  false,
+//       __filename: false,
+//     },
+//     entry:     { background: path.resolve(rootDir, 'background') },
+//     externals: [...Object.keys(packageMeta().dependencies)],
+//     devtool:   isDevelopment ? 'source-map' : false,
+//     resolve:   {
+//       alias:      { '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop') },
+//       extensions: ['.ts', '.js', '.json'],
+//       modules:    ['node_modules'],
+//     },
+//     output: {
+//       libraryTarget: 'commonjs2',
+//       filename:      '[name].js',
+//     },
+//     module: {
+//       rules: [
+//         {
+//           test: /\.ts$/,
+//           use:  { loader: 'ts-loader' },
+//         },
+//         {
+//           test: /\.js$/,
+//           use:  {
+//             loader:  'babel-loader',
+//             options: {
+//               ...babelConfig,
+//               cacheDirectory: true,
+//             },
+//           },
+//           exclude: [/node_modules/, distDir],
+//         },
+//         {
+//           test: /\.ya?ml$/,
+//           use:  { loader: 'js-yaml-loader' },
+//         },
+//         {
+//           test: /(?:^|[/\\])assets[/\\]scripts[/\\]/,
+//           use:  { loader: 'raw-loader' },
+//         },
+//       ],
+//     },
+//     plugins: [
+//       new webpack.EnvironmentPlugin({ NODE_ENV: process.env.NODE_ENV || 'production' }),
+//     ],
+//   },
+
+//   outputDir: appDir,
+
+//   pages: {
+//     index: {
+//       entry:    path.join(__dirname, 'nuxt', 'client.js'),
+//       template: path.join(__dirname, 'public', 'index.html'),
+//     },
+//   },
+// };
 
 // 'use strict';
 

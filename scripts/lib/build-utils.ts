@@ -192,6 +192,7 @@ export default {
     };
     const result = _.merge({}, this.webpackConfig, overrides);
     const rules = result.module?.rules ?? [];
+
     const uses = rules.flatMap((r) => {
       if (typeof r.use !== 'object') {
         return [];
@@ -219,10 +220,10 @@ export default {
         if (err) {
           return reject(err);
         }
-        if (stats.hasErrors()) {
+        if (stats?.hasErrors()) {
           return reject(new Error(stats.toString({ colors: true, errorDetails: true })));
         }
-        console.log(stats.toString({ colors: true }));
+        console.log(stats?.toString({ colors: true }));
         resolve();
       });
     });

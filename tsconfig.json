@@ -33,8 +33,7 @@
     ],    
     "types": [
       "@types/node",
-      "@types/jest",
-      "rancher"
+      "@types/jest"
     ]
   },
   "exclude": [
