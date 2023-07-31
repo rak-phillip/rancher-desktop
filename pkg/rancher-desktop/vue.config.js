@@ -1,18 +1,37 @@
 const path = require('path');
 
-const { defineConfig } = require('@vue/cli-service');
-const webpack = require('webpack');
+const _ = require('lodash');
 
 const babelConfig = require('../../babel.config');
+const packageMeta = require('../../package.json');
 
 const rootDir = path.resolve(__dirname, '..', '..');
-const distDir = path.resolve(rootDir, 'dist');
-const appDir = path.resolve(distDir, 'app');
-const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
-const mode = isDevelopment ? 'development' : 'production';
+const isDevelopment = /^dev/i.test(process.env.NODE_ENV);
+const corejsVersion = parseFloat(/\d+\.\d+/.exec(packageMeta.dependencies['core-js']));
+const modifiedBabelConfig = _.cloneDeep(babelConfig);
 
-module.exports = defineConfig({
-  transpileDependencies: true,
+modifiedBabelConfig.presets.unshift(['@vue/cli-plugin-babel/preset', { corejs: { version: corejsVersion } }]);
+
+module.exports = {
+  publicPath:          '/',
+  outputDir:           '../../dist/vue', // Adjust the output directory as per your preference
+  productionSourceMap: false,
+
+  configureWebpack: (config) => {
+    config.target = 'electron-renderer';
+    config.resolve.alias['@pkg'] = path.resolve(rootDir, 'pkg', 'rancher-desktop');
+
+    config.module.rules.push({
+      test:    /\.ya?ml(?:\?[a-z0-9=&.]+)?$/,
+      loader:  'js-yaml-loader',
+      options: { name: '[path][name].[ext]' },
+    });
+
+    config.module.rules.push({
+      test:   /(?:^|[/\\])assets[/\\]scripts[/\\]/,
+      loader: 'raw-loader',
+    });
+  },
 
   css: {
     loaderOptions: {
@@ -27,59 +46,16 @@ module.exports = defineConfig({
     },
   },
 
-  configureWebpack: {
-    mode,
-    target:  'electron-main',
-    entry:   { background: path.resolve(rootDir, 'background') },
-    resolve: {
-      alias:      { '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop') },
-      extensions: ['.ts', '.js', '.json'],
-      modules:    ['node_modules'],
-      fallback:   {
-        crypto:        require.resolve('crypto-browserify'),
-        os:            require.resolve('os-browserify/browser'),
-        child_process: false,
-        path:          false,
-        fs:            false,
-        stream:        false,
-        util:          false,
-      },
-    },
-    devtool: isDevelopment ? 'source-map' : false,
-    output:  {
-      libraryTarget: 'commonjs2',
-      filename:      '[name].js',
-    },
-    module: {
-      rules: [
-        {
-          test: /\.ts$/,
-          use:  { loader: 'ts-loader' },
-        },
-        {
-          test: /\.js$/,
-          use:  {
-            loader:  'babel-loader',
-            options: {
-              ...babelConfig,
-              cacheDirectory: true,
-            },
-          },
-          exclude: [/node_modules/, distDir],
-        },
-        {
-          test: /\.ya?ml$/,
-          use:  { loader: 'js-yaml-loader' },
-        },
-        {
-          test: /(?:^|[/\\])assets[/\\]scripts[/\\]/,
-          use:  { loader: 'raw-loader' },
-        },
-      ],
+  pluginOptions: {
+    i18n: {
+      locale:         'en',
+      fallbackLocale: 'en',
+      localeDir:      'locales',
+      enableInSFC:    false,
     },
   },
 
-  outputDir: appDir,
+  transpileDependencies: ['yaml'],
 
   pages: {
     index: {
@@ -87,13 +63,7 @@ module.exports = defineConfig({
       template: path.join(__dirname, 'public', 'index.html'),
     },
   },
-
-  chainWebpack: (config) => {
-    config.plugin('define').use(webpack.DefinePlugin, [
-      { 'process.client': JSON.stringify(true) },
-    ]);
-  },
-});
+};
 
 // const fs = require('fs');
 // const path = require('path');
