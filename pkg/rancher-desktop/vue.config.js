@@ -1,8 +1,15 @@
-const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
-const { FALSE } = require('sass');
+
+const { defineConfig } = require('@vue/cli-service');
+const webpack = require('webpack');
+
+const babelConfig = require('../../babel.config');
 
 const rootDir = path.resolve(__dirname, '..', '..');
+const distDir = path.resolve(rootDir, 'dist');
+const appDir = path.resolve(distDir, 'app');
+const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
+const mode = isDevelopment ? 'development' : 'production';
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -21,35 +28,70 @@ module.exports = defineConfig({
   },
 
   configureWebpack: {
+    mode,
+    target:  'electron-main',
+    entry:   { background: path.resolve(rootDir, 'background') },
     resolve: {
-      alias: {
-        '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop')
-      },
-      fallback: {
-        crypto: require.resolve('crypto-browserify'),
-        os: require.resolve('os-browserify/browser'),
+      alias:      { '@pkg': path.resolve(rootDir, 'pkg', 'rancher-desktop') },
+      extensions: ['.ts', '.js', '.json'],
+      modules:    ['node_modules'],
+      fallback:   {
+        crypto:        require.resolve('crypto-browserify'),
+        os:            require.resolve('os-browserify/browser'),
         child_process: false,
-        path: false,
-        fs: false,
-        stream: false,
-        util: false,
-      }
+        path:          false,
+        fs:            false,
+        stream:        false,
+        util:          false,
+      },
+    },
+    devtool: isDevelopment ? 'source-map' : false,
+    output:  {
+      libraryTarget: 'commonjs2',
+      filename:      '[name].js',
     },
     module: {
       rules: [
         {
-          test: /\.ya?ml$/,
-          use: { loader: 'js-yaml-loader' },
+          test: /\.ts$/,
+          use:  { loader: 'ts-loader' },
         },
-      ]
-    }
+        {
+          test: /\.js$/,
+          use:  {
+            loader:  'babel-loader',
+            options: {
+              ...babelConfig,
+              cacheDirectory: true,
+            },
+          },
+          exclude: [/node_modules/, distDir],
+        },
+        {
+          test: /\.ya?ml$/,
+          use:  { loader: 'js-yaml-loader' },
+        },
+        {
+          test: /(?:^|[/\\])assets[/\\]scripts[/\\]/,
+          use:  { loader: 'raw-loader' },
+        },
+      ],
+    },
   },
+
+  outputDir: appDir,
 
   pages: {
     index: {
       entry:    path.join(__dirname, 'nuxt', 'client.js'),
       template: path.join(__dirname, 'public', 'index.html'),
     },
+  },
+
+  chainWebpack: (config) => {
+    config.plugin('define').use(webpack.DefinePlugin, [
+      { 'process.client': JSON.stringify(true) },
+    ]);
   },
 });
 

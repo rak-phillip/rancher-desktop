@@ -14,9 +14,9 @@ import { RecursivePartial } from '@pkg/utils/typeUtils';
 import { showMessageBox } from '@pkg/window';
 import semver from 'semver';
 
+import { KubeClient } from './client';
 import K3sHelper, { ExtraRequiresReasons, NoCachedK3sVersionsError, ShortVersion } from '../k3sHelper';
 import WSLBackend, { Action } from '../wsl';
-import { KubeClient } from './client';
 
 export default class WSLKubernetesBackend extends events.EventEmitter implements K8s.KubernetesBackend {
   constructor(vm: WSLBackend) {

@@ -67,7 +67,7 @@ class DevRunner extends events.EventEmitter {
       };
     }
 
-    return { home: 'http://localhost:8888/pages/General' };
+    return { home: 'http://localhost:8888' };
   }
 
   #mainProcess: childProcess.ChildProcess | null = null;
@@ -110,12 +110,11 @@ class DevRunner extends events.EventEmitter {
   /**
    * Start the renderer process.
    */
-  async startRendererProcess(): Promise<void> {
-    await buildUtils.buildPreload();
+  startRendererProcess(): Promise<void> {
+    // await buildUtils.buildPreload();
     this.#rendererProcess = this.spawn(
       'Renderer process',
-      'node',
-      'node_modules/.bin/yarn',
+      'yarn',
       'run',
       'dev:ui',
       '--hostname',

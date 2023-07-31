@@ -191,10 +191,10 @@ export default {
     const rules = result.module?.rules ?? [];
 
     const uses: webpack.RuleSetRule[] = rules.filter(
-      (rule): rule is webpack.RuleSetRule => typeof rule !== 'boolean' && typeof rule !== 'string'
+      (rule): rule is webpack.RuleSetRule => typeof rule !== 'boolean' && typeof rule !== 'string',
     );
 
-    const tsLoader = uses.find((u) => u.loader === 'ts-loader');
+    const tsLoader = uses.find(u => u.loader === 'ts-loader');
 
     if (tsLoader) {
       tsLoader.options = _.merge({}, tsLoader.options, { compilerOptions: { noEmit: false } });
