@@ -6,7 +6,8 @@ const babelConfig = require('../../babel.config');
 const packageMeta = require('../../package.json');
 
 const rootDir = path.resolve(__dirname, '..', '..');
-const isDevelopment = /^dev/i.test(process.env.NODE_ENV);
+const isDevelopment = /^(?:dev|test)/.test(process.env.NODE_ENV ?? '');
+const mode = isDevelopment ? 'development' : 'production';
 const corejsVersion = parseFloat(/\d+\.\d+/.exec(packageMeta.dependencies['core-js']));
 const modifiedBabelConfig = _.cloneDeep(babelConfig);
 
@@ -14,23 +15,24 @@ modifiedBabelConfig.presets.unshift(['@vue/cli-plugin-babel/preset', { corejs: {
 
 module.exports = {
   publicPath:          '/',
-  outputDir:           '../../dist/vue', // Adjust the output directory as per your preference
+  outputDir:           path.resolve(rootDir, 'dist', 'vue'),
   productionSourceMap: false,
 
-  configureWebpack: (config) => {
-    config.target = 'electron-renderer';
-    config.resolve.alias['@pkg'] = path.resolve(rootDir, 'pkg', 'rancher-desktop');
+  chainWebpack: (config) => {
+    config.mode(mode);
+    config.target('electron-renderer');
+    config.resolve.alias.set('@pkg', path.resolve(rootDir, 'pkg', 'rancher-desktop'));
 
-    config.module.rules.push({
-      test:    /\.ya?ml(?:\?[a-z0-9=&.]+)?$/,
-      loader:  'js-yaml-loader',
-      options: { name: '[path][name].[ext]' },
-    });
+    config.module.rule('yaml')
+      .test(/\.ya?ml(?:\?[a-z0-9=&.]+)?$/)
+      .use('js-yaml-loader')
+      .loader('js-yaml-loader')
+      .options({ name: '[path][name].[ext]' });
 
-    config.module.rules.push({
-      test:   /(?:^|[/\\])assets[/\\]scripts[/\\]/,
-      loader: 'raw-loader',
-    });
+    config.module.rule('raw')
+      .test(/(?:^|[/\\])assets[/\\]scripts[/\\]/)
+      .use('raw-loader')
+      .loader('raw-loader');
   },
 
   css: {
