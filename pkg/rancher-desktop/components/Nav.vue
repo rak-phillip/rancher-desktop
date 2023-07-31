@@ -63,24 +63,25 @@ export default {
     items: {
       type:      Array,
       required:  true,
-      validator: (value: {route: string, error?: number}[]) => {
-        const nuxt: NuxtApp = (global as any).$nuxt;
-        const routes = nuxt.$router.getRoutes().reduce((paths: Record<string, RouteRecordPublic>, route) => {
-          paths[route.path] = route;
+      // validator: (value: {route: string, error?: number}[]) => {
+      //   const nuxt: NuxtApp = (global as any).$nuxt;
+      //   console.log('NOT FAIL 1', { nuxt, whatIsIt: this });
+      //   const routes = nuxt.$router.getRoutes().reduce((paths: Record<string, RouteRecordPublic>, route) => {
+      //     paths[route.path] = route;
 
-          return paths;
-        }, {});
+      //     return paths;
+      //   }, {});
 
-        return value && (value.length > 0) && value.every(({ route }) => {
-          const result = route in routes;
+      //   return value && (value.length > 0) && value.every(({ route }) => {
+      //     const result = route in routes;
 
-          if (!result) {
-            console.error(`<Nav> error: path ${ JSON.stringify(route) } not found in routes ${ JSON.stringify(Object.keys(routes)) }`);
-          }
+      //     if (!result) {
+      //       console.error(`<Nav> error: path ${ JSON.stringify(route) } not found in routes ${ JSON.stringify(Object.keys(routes)) }`);
+      //     }
 
-          return result;
-        });
-      },
+      //     return result;
+      //   });
+      // },
     },
     extensions: {
       type:     Array as PropType<{ id: string, metadata: ExtensionMetadata }[]>,
