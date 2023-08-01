@@ -61,16 +61,6 @@ export default {
       }, 50)
     }
   },
-  mounted () {
-    if (EventSource === undefined) {
-      return // Unsupported
-    }
-    this.sseConnect()
-  },
-  beforeDestroy () {
-    this.sseClose()
-    clearInterval(this._progressAnimation)
-  },
   methods: {
     sseConnect () {
       if (this._connecting) {

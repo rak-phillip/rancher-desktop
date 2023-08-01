@@ -1,6 +1,7 @@
 const path = require('path');
 
 const _ = require('lodash');
+const webpack = require('webpack');
 
 const babelConfig = require('../../babel.config');
 const packageMeta = require('../../package.json');
@@ -33,6 +34,8 @@ module.exports = {
       .test(/(?:^|[/\\])assets[/\\]scripts[/\\]/)
       .use('raw-loader')
       .loader('raw-loader');
+
+    config.plugin('define-plugin').use(webpack.DefinePlugin, [{ 'process.client': JSON.stringify(true) }]);
   },
 
   css: {
