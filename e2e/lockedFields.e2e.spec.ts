@@ -22,6 +22,9 @@ limitations under the License.
 import os from 'os';
 import path from 'path';
 
+import { readDeploymentProfiles } from '@pkg/main/deploymentProfiles';
+import { spawnFile } from '@pkg/utils/childProcess';
+import { reopenLogs } from '@pkg/utils/logging';
 import { expect, test } from '@playwright/test';
 
 import { NavPage } from './pages/nav-page';
@@ -30,9 +33,6 @@ import {
 } from './utils/TestUtils';
 
 import type { DeploymentProfileType } from '@pkg/config/settings';
-import { readDeploymentProfiles } from '@pkg/main/deploymentProfiles';
-import { spawnFile } from '@pkg/utils/childProcess';
-import { reopenLogs } from '@pkg/utils/logging';
 
 import type { ElectronApplication, BrowserContext, Page } from '@playwright/test';
 
