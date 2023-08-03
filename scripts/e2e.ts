@@ -8,9 +8,9 @@ import childProcess from 'child_process';
 import events from 'events';
 import util from 'util';
 
-import buildUtils from './lib/build-utils';
-
 import { readDeploymentProfiles } from '@pkg/main/deploymentProfiles';
+
+import buildUtils from './lib/build-utils';
 
 const sleep = util.promisify(setTimeout);
 
@@ -89,10 +89,16 @@ class E2ETestRunner extends events.EventEmitter {
    * Start the renderer process.
    */
   startRendererProcess(): Promise<void> {
-    this.#rendererProcess = this.spawn('Renderer process',
-      'node', 'node_modules/nuxt/bin/nuxt.js',
-      '--hostname', 'localhost',
-      '--port', this.rendererPort.toString(), buildUtils.rendererSrcDir);
+    this.#rendererProcess = this.spawn(
+      'Renderer process',
+      'yarn',
+      'run',
+      'build:ui',
+      '--hostname',
+      'localhost',
+      '--port',
+      this.rendererPort.toString(),
+    );
 
     return Promise.resolve();
   }
@@ -104,7 +110,6 @@ class E2ETestRunner extends events.EventEmitter {
       if (Object.keys(deploymentProfiles.defaults).length > 0 || Object.keys(deploymentProfiles.locked).length > 0) {
         throw new Error("Trying to run e2e tests with existing deployment profiles isn't supported.");
       }
-      process.env.NODE_ENV = 'test';
       process.env.RD_TEST = 'e2e';
 
       // Set feature flags
