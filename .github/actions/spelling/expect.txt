@@ -690,6 +690,7 @@ Srivastav
 ssd
 sshfs
 sslip
+Ssr
 ssr
 statefulset
 stoinks
