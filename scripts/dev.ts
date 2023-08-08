@@ -111,7 +111,7 @@ class DevRunner extends events.EventEmitter {
         'yarn',
         'run',
         'dev:ui',
-        '--hostname',
+        '--host',
         'localhost',
         '--port',
         this.rendererPort.toString(),
@@ -128,7 +128,6 @@ class DevRunner extends events.EventEmitter {
 
       // Wait for the renderer to finish, so that vue-cli output doesn't
       // clobber debugging output.
-      // Wait for the renderer to finish, so that vue-cli output doesn't clobber debugging output.
       const rendererEnv = this.rendererEnv();
 
       const maxRetries = 10;
