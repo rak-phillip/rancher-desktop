@@ -89,5 +89,4 @@
 ^pkg/rancher-desktop/assets/scripts/logrotate-k3s$
 ignore$
 /translations/(?!en)
-# Ignore directory pkg/rancher-desktop/nuxt
 pkg/rancher-desktop/nuxt/
