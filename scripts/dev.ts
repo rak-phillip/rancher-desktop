@@ -130,7 +130,7 @@ class DevRunner extends events.EventEmitter {
       // clobber debugging output.
       const rendererEnv = this.rendererEnv();
 
-      const maxRetries = 10;
+      const maxRetries = 30;
       let retryCount = 0;
       const retryInterval = 1000;
 
