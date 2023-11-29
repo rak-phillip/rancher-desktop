@@ -56,19 +56,31 @@ func (lock *BackendLock) Unlock(appPaths paths.Paths, restart bool) error {
 }
 
 func ensureBackendStarted() error {
+	fmt.Println("Getting connection info...")
 	connectionInfo, err := config.GetConnectionInfo(true)
 	if err != nil || connectionInfo == nil {
 		return err
 	}
+
+	fmt.Printf("Connection Info: %+v\n", connectionInfo)
+
+	fmt.Println("Creating RDClient...")
 	rdClient := client.NewRDClient(connectionInfo)
+
+	fmt.Println("Updating backend state...")
 	desiredState := client.BackendState{
 		VMState: "STARTED",
 		Locked:  false,
 	}
+
+	fmt.Printf("Desired State: %+v\n", desiredState)
+
 	err = rdClient.UpdateBackendState(desiredState)
 	if err != nil && !errors.Is(err, client.ErrConnectionRefused) {
 		return fmt.Errorf("failed to restart backend: %w", err)
 	}
+
+	fmt.Println("Backend started successfully.")
 	return nil
 }
 

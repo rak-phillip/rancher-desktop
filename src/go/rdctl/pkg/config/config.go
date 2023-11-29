@@ -94,19 +94,30 @@ func GetConnectionInfo(mayBeMissing bool) (*ConnectionInfo, error) {
 		return nil, fmt.Errorf("error parsing config file %q: %w", configPath, err)
 	}
 
+	fmt.Printf("Host value: %s\n", connectionSettings.Host)
 	if connectionSettings.Host == "" {
+		fmt.Printf("Updating host value: %s\n", settings.Host)
 		connectionSettings.Host = settings.Host
 		if connectionSettings.Host == "" {
 			connectionSettings.Host = "127.0.0.1"
 		}
 	}
+
+	fmt.Printf("User value: %s\n", connectionSettings.User)
 	if connectionSettings.User == "" {
+		fmt.Printf("Updating user value: %s\n", settings.User)
 		connectionSettings.User = settings.User
 	}
+
+	fmt.Printf("Password value: %s\n", connectionSettings.Password)
 	if connectionSettings.Password == "" {
+		fmt.Printf("Updating password value: %s\n", settings.Password)
 		connectionSettings.Password = settings.Password
 	}
+
+	fmt.Printf("Port value: %s\n", connectionSettings.Port)
 	if connectionSettings.Port == 0 {
+		fmt.Printf("Updating port value: %s\n", settings.Port)
 		connectionSettings.Port = settings.Port
 	}
 	if connectionSettings.Port == 0 || connectionSettings.User == "" || connectionSettings.Password == "" {
