@@ -1,8 +1,9 @@
 <script lang="ts">
 
-import { Banner, LabeledInput, TextAreaAutoGrow } from '@rancher/components';
+import { Banner, LabeledInput } from '@rancher/components';
 import dayjs from 'dayjs';
 import Vue from 'vue';
+import editor from 'vue2-ace-editor';
 import { mapGetters } from 'vuex';
 
 import { Snapshot, SnapshotEvent } from '@pkg/main/snapshots/types';
@@ -18,7 +19,7 @@ export default Vue.extend({
   components: {
     Banner,
     LabeledInput,
-    TextAreaAutoGrow,
+    editor,
   },
 
   data() {
@@ -45,6 +46,12 @@ export default Vue.extend({
   },
 
   methods: {
+    editorInit() {
+      require('brace/ext/language_tools');
+      require('brace/mode/markdown');
+      require('brace/theme/solarized_dark');
+    },
+
     goBack(event: SnapshotEvent | null) {
       this.$router.push({
         name:   'Snapshots',
@@ -142,12 +149,12 @@ export default Vue.extend({
       </div>
       <div class="field description-field">
         <label>{{ t('snapshots.create.description.label') }}</label>
-        <TextAreaAutoGrow
-          ref="descriptionInput"
+        <editor
           v-model="description"
-          data-test="createSnapshotDescInput"
+          lang="markdown"
+          theme="solarized_dark"
           class="input"
-          :disabled="creating"
+          @init="editorInit"
         />
       </div>
       <div class="actions">
